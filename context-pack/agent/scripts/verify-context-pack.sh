@@ -1,5 +1,5 @@
 #!/bin/sh
-# Verify the Zero-Drift context pack is complete.
+# Verify context-pack artifacts exist at repo or target root.
 # Usage: sh scripts/verify-context-pack.sh [root-dir]
 set -eu
 
@@ -24,6 +24,9 @@ docs/handoffs/templates/handoff-template.md
 .claude/skills/verify-change/SKILL.md
 "
 
+AREA_RULES="frontend backend database infrastructure tests nas-infrastructure nas-game-stability"
+SKILLS="verify-change verification-before-completion systematic-debugging using-git-worktrees nas-golden-master-index nas-repo-isolation nas-webrtc-verify nas-deploy-ultra nas-storage-boundary"
+
 MISSING=0
 echo "[verify] checking context pack at: $ROOT"
 
@@ -36,8 +39,7 @@ for rel in $REQUIRED; do
   fi
 done
 
-# Check area rules exist
-for area in frontend backend database infrastructure tests; do
+for area in $AREA_RULES; do
   rel=".cursor/rules/areas/${area}.mdc"
   if [ ! -f "$ROOT/$rel" ]; then
     echo "[FAIL] missing: $rel"
@@ -46,6 +48,27 @@ for area in frontend backend database infrastructure tests; do
     echo "[ok]   $rel"
   fi
 done
+
+for skill in $SKILLS; do
+  rel=".claude/skills/${skill}/SKILL.md"
+  if [ ! -f "$ROOT/$rel" ]; then
+    echo "[FAIL] missing: $rel"
+    MISSING=$((MISSING + 1))
+  else
+    echo "[ok]   $rel"
+  fi
+done
+
+# Governance OS repo also maintains canonical pack
+GOV_ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+if [ "$ROOT" = "$GOV_ROOT" ] && [ ! -d "$GOV_ROOT/context-pack/agent/.cursor" ]; then
+  echo "[FAIL] missing: context-pack/agent/.cursor"
+  MISSING=$((MISSING + 1))
+else
+  if [ "$ROOT" = "$GOV_ROOT" ]; then
+    echo "[ok]   context-pack/agent (canonical source)"
+  fi
+fi
 
 if [ "$MISSING" -gt 0 ]; then
   echo "[verify] FAILED — $MISSING required file(s) missing"

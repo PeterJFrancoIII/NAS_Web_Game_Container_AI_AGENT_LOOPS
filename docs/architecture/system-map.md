@@ -1,85 +1,60 @@
 # System Map — Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS
 
 Date: 2026-06-18  
-Status: accepted
+Status: accepted (refactored)
 
 ## Overview
 
+Governance OS with **single-source context pack**. Agent artifacts live in `context-pack/agent/`; repo root `.cursor`/`.claude` are installed copies.
+
 ```text
-┌─────────────────────────────────────────────────────────────┐
-│                    User / Human Architect                    │
-└──────────────────────────┬──────────────────────────────────┘
-                           │ objective
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│              AI System Architect (Cursor AUTO)               │
-│  Reads: MISSION.md, current-objective.md, .cursor/rules     │
-└──────────────────────────┬──────────────────────────────────┘
-                           │ decomposes
-          ┌────────────────┼────────────────┐
-          ▼                ▼                ▼
-    ┌──────────┐    ┌──────────┐    ┌──────────┐
-    │ Planner  │    │ Explorer │    │ Verifier │
-    │ (read)   │    │ (read)   │    │ (test)   │
-    └────┬─────┘    └──────────┘    └────┬─────┘
-         │                                │
-         ▼                                ▼
-    ┌──────────┐                    ┌──────────┐
-    │Implementer│                   │ Security │
-    │ 1 writer │                   │ Reviewer │
-    │ /worktree│                   └──────────┘
-    └────┬─────┘
-         │ verify + handoff
+User → AI Architect (Cursor AUTO)
+         reads MISSION.md, CONTEXT.md, scoped rules
+         invokes on-demand skills
+         │
+         ├─ Explorer (read stable via GitHub MCP)
+         ├─ Implementer (bootstrapped NAS dev worktree)
+         └─ Verifier (verify-context-pack, nas-webrtc-verify)
+         │
          ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Durable Memory (version-controlled)             │
-│  MISSION.md · handoffs · ADRs · ai-decision-log · rules     │
-└─────────────────────────────────────────────────────────────┘
+Durable memory: docs/handoffs, docs/ai, docs/adr
 ```
 
 ## Components
 
 | Component | Path | Responsibility |
-|---|---|---|
-| Mission summary | `MISSION.md` | Always-load objective, criteria, non-goals |
-| Mission Control Packet | `docs/specs/current-objective.md` | Full structured spec |
-| Cursor rules | `.cursor/rules/` | Scoped IDE governance |
-| Claude agents | `.claude/agents/` | Role definitions for subagents |
-| Claude skills | `.claude/skills/` | On-demand procedures |
-| Bootstrap | `scripts/bootstrap-project.sh` | Install pack into new project |
-| Verification | `scripts/verify-context-pack.sh` | Gate for required artifacts |
-| Templates | `templates/project-bootstrap/` | Source files for bootstrap |
-| Reference | `docs/reference/` | Full bootloader spec (on-demand) |
+|-----------|------|----------------|
+| Context pack (canonical) | `context-pack/agent/` | Rules, agents, skills — **edit here** |
+| Bootstrap stubs | `context-pack/bootstrap/` | New-project doc templates |
+| Sync | `scripts/sync-context-pack.sh` | Install agent pack to repo root |
+| Bootstrap | `scripts/bootstrap-project.sh` | New governed project |
+| Verify | `scripts/verify-context-pack.sh` | Artifact gate |
+| Agent index | `CONTEXT.md` | Fast navigation |
+| Live mission | `MISSION.md`, `docs/specs/` | Current truth |
+| Governance docs | `docs/adr/`, `docs/handoffs/`, `docs/ai/` | Decisions and session memory |
 
 ## Isolation boundary
 
 ```text
-  Red_Alert2_NAS:Arch (FROZEN)                    Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS (ACTIVE)
-  ─────────────────────────                      ─────────────────────────────────────────────
-  NAS_Web_Game_Container                         NAS_Web_Game_Container_AI_AGENT_LOOPS
-  Production RA2/AoE2/SC streaming               AI agent loops + governance OS
-  No agent governance changes                    Bootstraps governed NAS development
+  FROZEN: Red_Alert2_NAS:Arch / NAS_Web_Game_Container
+  ACTIVE: Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS / NAS_Web_Game_Container_AI_AGENT_LOOPS
+  FUTURE: bootstrapped NAS dev worktree (application code)
 ```
 
-## Data flow — bootstrap new project
+## Data flow
 
 ```text
-Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS/templates/project-bootstrap/*
-        │
-        │  bootstrap-project.sh <target> "<name>"
-        ▼
-NewProject/
-  ├── MISSION.md          (customized)
-  ├── AGENTS.md
-  ├── .cursor/rules/
-  └── docs/specs/current-objective.md (stub)
+context-pack/agent/
+    │ sync-context-pack.sh
+    ▼
+repo root .cursor/ .claude/
+    │ bootstrap-project.sh
+    ▼
+NAS dev worktree (new directory)
 ```
 
-## External systems (optional, per-project)
+## Related
 
-| System | Role | Default permission |
-|---|---|---|
-| GitHub | Version control, CI, PR gates | Read/write repo |
-| MCP servers | Tool extensions | Read-only allowlist |
-| Gateway agent | Triage, CI summary | Issues/comments only |
-| Background agents | Test gen, docs, dep PRs | Isolated branch |
+- `docs/adr/ADR-0002-context-pack-single-source.md`
+- `docs/architecture/nas-stable-pointer.md`
+- `docs/specs/mcp-allowlist.md`

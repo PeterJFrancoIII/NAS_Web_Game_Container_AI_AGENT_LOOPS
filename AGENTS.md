@@ -17,9 +17,14 @@ Build the user's current objective with maximum verified progress and minimum dr
 ## Commands
 
 - Verify context pack: `sh scripts/verify-context-pack.sh`
+- Sync agent pack to root: `sh scripts/sync-context-pack.sh` (after editing `context-pack/agent/`)
 - Bootstrap new project: `sh scripts/bootstrap-project.sh <target-dir> "<project-name>"`
 - Check git status: `git status`
 - Diff stat: `git diff --stat`
+
+## Maintainer rule
+
+Edit `.cursor` and `.claude` only under `context-pack/agent/`, then run `sync-context-pack.sh`. Root copies are installed artifacts.
 
 ## Risk classes
 

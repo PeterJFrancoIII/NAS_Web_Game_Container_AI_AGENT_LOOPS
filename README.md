@@ -1,71 +1,59 @@
 # Red Alert 2 NAS — AI Agent Loops
 
-AI System Architect bootloader and governed context pack for the NAS Web Game Container project line.
+Governed AI agent context pack for the NAS Web Game Container project line.
 
-**Local directory:** `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS`  
-**GitHub:** [NAS_Web_Game_Container_AI_AGENT_LOOPS](https://github.com/PeterJFrancoIII/NAS_Web_Game_Container_AI_AGENT_LOOPS)
-
-**Source spec:** [`docs/reference/AI_System_Architect_Bootloader_Zero-Drift_Build_5.18.26.md`](docs/reference/AI_System_Architect_Bootloader_Zero-Drift_Build_5.18.26.md)
-
-## What this is
-
-This repository is the **AI agent loops** variant of the NAS project — fully separated from the stable golden master. It installs durable agent memory, drift prevention, and verification gates for governed development.
-
-| Stable sibling (frozen) | This repo (active) |
+| | |
 |---|---|
-| `Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container` | `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` / `NAS_Web_Game_Container_AI_AGENT_LOOPS` |
-| Production golden master | AI agent loops + governance OS |
+| **Local** | `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` |
+| **GitHub** | [NAS_Web_Game_Container_AI_AGENT_LOOPS](https://github.com/PeterJFrancoIII/NAS_Web_Game_Container_AI_AGENT_LOOPS) |
+| **Frozen stable** | `Red_Alert2_NAS:Arch` / [NAS_Web_Game_Container](https://github.com/PeterJFrancoIII/NAS_Web_Game_Container) |
 
 ## Quick start
 
-### Boot a new project
-
 ```bash
-sh scripts/bootstrap-project.sh "/path/to/new-project" "My Project Name"
-cd "/path/to/new-project"
+# Verify this repo
 sh scripts/verify-context-pack.sh
+
+# After editing rules/skills in context-pack/agent/
+sh scripts/sync-context-pack.sh
+
+# Bootstrap a new governed NAS dev project
+sh scripts/bootstrap-project.sh "/path/to/nas-dev" "NAS Dev"
 ```
 
-### Verify this repo
+**Agent navigation:** [`CONTEXT.md`](CONTEXT.md) · [`MISSION.md`](MISSION.md) · [`AGENTS.md`](AGENTS.md)
 
-```bash
-sh scripts/verify-context-pack.sh
-```
-
-### Agent session protocol (Cursor AUTO)
-
-1. Read `MISSION.md` and `docs/specs/current-objective.md`
-2. Read relevant `.cursor/rules/*.mdc`
-3. Plan with allowed/forbidden files and verification commands
-4. Implement one slice
-5. Run verification
-6. Update `docs/handoffs/` before context reset
-
-## Repository layout
+## Architecture (refactored)
 
 ```text
-MISSION.md                 # Always-load mission summary
-AGENTS.md                  # Cross-agent operating rules
-CLAUDE.md                  # Claude Code instructions
-.cursor/rules/             # Cursor IDE scoped rules
-.claude/agents/            # Role-specific subagent definitions
-.claude/skills/            # Repeatable procedures
-docs/specs/                # Mission Control Packet
-docs/architecture/         # System map
-docs/adr/                  # Architecture decision records
-docs/handoffs/             # Session transition memory
-docs/ai/                   # AI decision audit log
-scripts/                   # Bootstrap and verification
-templates/                 # Files copied into new projects
+context-pack/              # SINGLE SOURCE OF TRUTH — edit rules/skills here
+  agent/                   #   .cursor, .claude, verify script
+  bootstrap/               #   stubs for new projects ({{PROJECT_NAME}})
+scripts/
+  sync-context-pack.sh     # agent/ → repo root
+  bootstrap-project.sh     # agent/ + bootstrap/ → new project
+  verify-context-pack.sh
+docs/                      # live governance memory (mission, ADRs, handoffs)
+MISSION.md                 # always-load mission (repo-specific)
+.cursor/ .claude/          # installed copies (do not edit — sync from context-pack)
 ```
+
+## Maintainer workflow
+
+1. Edit `context-pack/agent/.cursor/rules/` or `.claude/skills/`
+2. `sh scripts/sync-context-pack.sh`
+3. `sh scripts/verify-context-pack.sh`
+4. Commit **both** `context-pack/` and synced root `.cursor`/`.claude`
 
 ## Branches
 
 | Branch | Purpose |
-|---|---|
-| `main` | Stable AI agent loops release |
-| `feature/ai-agent-loops` | Active implementation of v2.0 context pack |
+|--------|---------|
+| `main` | Stable release |
+| `feature/ai-agent-loops` | Active development |
 
-## License
+## Reference
 
-Internal tooling. Adapt per project.
+- Bootloader spec: [`docs/reference/AI_System_Architect_Bootloader_Zero-Drift_Build_5.18.26.md`](docs/reference/AI_System_Architect_Bootloader_Zero-Drift_Build_5.18.26.md)
+- Context pack docs: [`context-pack/README.md`](context-pack/README.md)
+- ADR: [`docs/adr/ADR-0002-context-pack-single-source.md`](docs/adr/ADR-0002-context-pack-single-source.md)

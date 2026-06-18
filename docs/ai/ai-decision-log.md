@@ -83,3 +83,13 @@ Chronological record of significant AI/human architecture and governance decisio
 **Verification:** `verify-context-pack.sh` passes; stable repo not modified.
 
 ---
+
+## 2026-06-18 — Full refactor: context-pack single source of truth
+
+**Decision:** Replace duplicated `templates/project-bootstrap/` with `context-pack/agent/` + `context-pack/bootstrap/`. Add `sync-context-pack.sh`.
+
+**Rationale:** Eliminate ~90 mirrored files and drift between root and template copies.
+
+**Verification:** ADR-0002; bootstrap and verify tests pass.
+
+---
