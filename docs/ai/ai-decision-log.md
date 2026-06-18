@@ -45,3 +45,31 @@ Chronological record of significant AI/human architecture and governance decisio
 **Consequences:** Bootstrapped projects may drift from OS template; periodic re-sync manual or scripted.
 
 **Verification:** Integration test in bootstrap script temp dir.
+
+---
+
+## 2026-06-18 — Slice 1: NAS distillate skills (MCP ingestion plan)
+
+**Decision:** Add `nas-golden-master-index` and `nas-repo-isolation` skills plus `docs/architecture/nas-stable-pointer.md`. Distill stable golden master facts into on-demand skills instead of importing stable code or always-loading `GOLDEN_MASTER.md`.
+
+**Rationale:** Reduces context bloat and rediscovery cost while preserving ADR-0001 isolation.
+
+**Files added:**
+- `.claude/skills/nas-golden-master-index/SKILL.md`
+- `.claude/skills/nas-repo-isolation/SKILL.md`
+- `templates/project-bootstrap/.claude/skills/` (mirrored)
+- `docs/architecture/nas-stable-pointer.md`
+
+**Verification:** `sh scripts/verify-context-pack.sh` passes; stable repo not modified.
+
+---
+
+## 2026-06-18 — Slice 2: Verification and debug skills
+
+**Decision:** Add `nas-webrtc-verify` skill; copy `verification-before-completion`, `systematic-debugging`, `using-git-worktrees` from global skills into repo and bootstrap template; extend `30-testing-quality.mdc` with NAS test globs.
+
+**Rationale:** Encode stable test gates so agents stop rediscovering `run-webrtc-tests.sh` → `run-deploy-tests.sh` → `verify-deployment.sh` chain.
+
+**Verification:** `verify-context-pack.sh` passes; stable repo not modified.
+
+---

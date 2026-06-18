@@ -27,6 +27,12 @@ Use skills for repeatable procedures. Do not paste long procedures into chat if 
 ## Skills available
 
 - `verify-change` — verify a code change against mission, scope, tests, and risk class
+- `verification-before-completion` — evidence before any completion claim
+- `systematic-debugging` — root cause before fixes
+- `using-git-worktrees` — isolated workspace setup
+- `nas-golden-master-index` — NAS golden master one-page index
+- `nas-repo-isolation` — frozen vs active repo rules
+- `nas-webrtc-verify` — WebRTC test and deploy verification chain
 
 Never perform red-zone changes without explicit approval.
 

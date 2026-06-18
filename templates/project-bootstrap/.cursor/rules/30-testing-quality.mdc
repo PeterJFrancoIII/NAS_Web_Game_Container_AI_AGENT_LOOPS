@@ -6,6 +6,11 @@ globs:
   - "tests/**"
   - "packages/**"
   - "scripts/**"
+  - "container/remote-ultra/**"
+  - "container/webrtc*"
+  - "scripts/run-*-tests.sh"
+  - "scripts/probe-webrtc*.sh"
+  - "scripts/verify-*.sh"
 alwaysApply: false
 ---
 
@@ -17,3 +22,9 @@ alwaysApply: false
 - For bug fixes, add a regression test when practical.
 - For refactors, prove behavior equivalence.
 - Run `sh scripts/verify-context-pack.sh` after context pack changes.
+
+## NAS dev worktree (when bootstrapped)
+
+- WebRTC changes: `sh scripts/run-webrtc-tests.sh` first, then `run-deploy-tests.sh`.
+- Before production deploy: invoke `nas-webrtc-verify` skill; redeploy is **red-zone**.
+- Multi-component failures: invoke `systematic-debugging` before guessing fixes.

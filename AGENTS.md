@@ -35,6 +35,31 @@ Red changes require explicit human approval before edits and before merge.
 
 This repository (`Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` / `NAS_Web_Game_Container_AI_AGENT_LOOPS`) must never modify the frozen stable system (`Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container`). All new governed development uses this AI agent loops repo or projects bootstrapped from it.
 
+## Frozen stable repo (read-only)
+
+| Item | Value |
+|------|-------|
+| Local | `Red_Alert2_NAS:Arch/synology-ra2-arch/` |
+| GitHub | `PeterJFrancoIII/NAS_Web_Game_Container` @ `main` |
+| Tag | `golden-master-2026-06-udp-lan` |
+| Pointer doc | `docs/architecture/nas-stable-pointer.md` |
+
+**Policy:** GitHub MCP and local reads only. No writes, pushes, or imports of stable production code into this repo. Invoke `nas-repo-isolation` skill before cross-repo work.
+
+## On-demand skills (load when relevant — not always)
+
+| Skill | Trigger |
+|-------|---------|
+| `verify-change` | Before claiming any task done |
+| `verification-before-completion` | Before any success/completion claim |
+| `systematic-debugging` | Bug, test failure, unexpected behavior |
+| `using-git-worktrees` | Starting isolated feature work |
+| `nas-golden-master-index` | NAS architecture, ports, compose, deploy questions |
+| `nas-repo-isolation` | Cross-repo work, imports, GitHub access |
+| `nas-webrtc-verify` | WebRTC, ICE, coturn, ultra-play.js changes |
+
+Full bootloader reference: `docs/reference/AI_System_Architect_Bootloader_Zero-Drift_Build_5.18.26.md` — **on demand only**.
+
 ## Communication
 
 Use terse, evidence-first updates. Preserve exact code, paths, commands, and errors.
