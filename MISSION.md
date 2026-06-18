@@ -1,36 +1,33 @@
-# Mission
+# Mission — NAS Web Game Container Refactor
 
-## User objective
+## Objective
 
-Maintain **Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS** as the governed AI agent loops OS for NAS Web Game Container development — with a refactored single-source context pack, NAS distillate skills, and MCP allowlist.
+Refactor **NAS_Web_Game_Container** (Red Alert 2 Synology Docker stack) in this repo — Docker compose, WebRTC/Ultra streaming, Wine game containers, coturn, and deploy scripts — while preserving the frozen golden master at `Red_Alert2_NAS:Arch` / `synology-ra2-arch`.
 
-## Current objective
+## Current phase
 
-Operate the refactored `context-pack/` architecture. All rule and skill edits flow through `context-pack/agent/` → `sync-context-pack.sh`.
+**Phase 1 — Compose layout:** Move archived experiment compose overlays to `archive/compose/`, update `scripts/lib.sh` and docs paths, keep the production ultra stack (`compose.yaml` + `compose.https.yaml` + `compose.ultra*.yaml`) at repo root.
 
 ## Success criteria
 
-- [x] Single source of truth at `context-pack/` (ADR-0002)
-- [x] `templates/project-bootstrap/` duplication removed
-- [x] `sync-context-pack.sh`, `bootstrap-project.sh`, `verify-context-pack.sh` operational
-- [x] MCP ingestion slices 1–3 complete
-- [ ] NAS dev worktree bootstrapped for application development
-- [ ] P0 MCPs enabled in Cursor after human review
+- [ ] `docs/specs/nas-container-refactor.md` phased plan published
+- [x] Archived compose files under `archive/compose/`
+- [ ] `scripts/lib.sh` resolves archived overlays; ultra production stack unchanged
+- [ ] `sh scripts/run-webrtc-tests.sh` and `pytest` pass
+- [ ] Changes on `feature/ai-agent-loops` and merged to `main`
 
 ## Non-goals
 
-- Modifying frozen `NAS_Web_Game_Container` golden master
-- Importing stable production code into this governance repo
-- Always-loading full bootloader or golden master docs
+- Modifying frozen `Red_Alert2_NAS:Arch` / `synology-ra2-arch`
+- Deploying to production NAS without human approval
+- Bootloader / Zero-Drift governance overlay (lives in separate research)
 
 ## Source of truth
 
-- Agent index: `CONTEXT.md`
-- Spec: `docs/specs/current-objective.md`
-- Architecture: `docs/architecture/system-map.md`
-- Canonical pack: `context-pack/`
-- MCP policy: `docs/specs/mcp-allowlist.md`
+- Refactor plan: `docs/specs/nas-container-refactor.md`
+- Production stack: `docs/GOLDEN_MASTER.md`
+- Architecture: `docs/CONSOLIDATED_ARCHITECTURE.md`
 
 ## Red-zone areas
 
-Auth, payments, permissions, production NAS deploy, secrets, migrations — explicit human approval required.
+Auth, payments, production NAS deploy, secrets, TLS key rotation, coturn credentials, Wine prefix mutations — explicit human approval required.
