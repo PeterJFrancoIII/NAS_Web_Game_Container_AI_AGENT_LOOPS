@@ -63,7 +63,7 @@ Healthy output shows `tailscale ping` succeeding **without** `via DERP`.
 If you must use browser WebRTC remotely, Tailscale can replace DDNS port forwarding for control channels (`6083-6086`). Media ports still require ICE reachability — run:
 
 ```bash
-sh scripts/check-webrtc-ice-reachability.sh
+sh scripts/archive/check-webrtc-ice-reachability.sh
 ```
 
 Prefer Moonlight for production; WebRTC is legacy fallback only.

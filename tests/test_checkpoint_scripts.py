@@ -426,7 +426,7 @@ class EnvironmentCheckpointUnitTest(unittest.TestCase):
 
 class WebsockifyCheckpointUnitTest(unittest.TestCase):
     def test_token_file_routes_vnc_and_audio_targets(self):
-        tokens = (PROJECT_ROOT / "container/websockify-tokens.cfg").read_text(encoding="utf-8")
+        tokens = (PROJECT_ROOT / "archive/container/websockify-tokens.cfg").read_text(encoding="utf-8")
         self.assertIn("vnc: 127.0.0.1:5900", tokens)
         self.assertIn("audio: 127.0.0.1:5711", tokens)
         self.assertIn("latency: 127.0.0.1:5721", tokens)
@@ -454,11 +454,11 @@ class WebsockifyCheckpointUnitTest(unittest.TestCase):
             launcher = root / "start-websockify.sh"
             token_cfg = root / "websockify-tokens.cfg"
             token_cfg.write_text(
-                (PROJECT_ROOT / "container/websockify-tokens.cfg").read_text(encoding="utf-8"),
+                (PROJECT_ROOT / "archive/container/websockify-tokens.cfg").read_text(encoding="utf-8"),
                 encoding="utf-8",
             )
             launcher.write_text(
-                (PROJECT_ROOT / "container/start-websockify.sh")
+                (PROJECT_ROOT / "archive/container/start-websockify.sh")
                 .read_text(encoding="utf-8")
                 .replace('RUNNER="/opt/novnc/utils/websockify/run"', f'RUNNER="{root / "opt/novnc/utils/websockify/run"}"')
                 .replace('WEB_ROOT="/opt/novnc"', f'WEB_ROOT="{root / "opt/novnc"}"')
@@ -484,7 +484,7 @@ class AudioProxyCheckpointUnitTest(unittest.TestCase):
         proc = subprocess.Popen(
             [
                 "sh",
-                str(PROJECT_ROOT / "container/audio-proxy.sh"),
+                str(PROJECT_ROOT / "archive/container/audio-proxy.sh"),
                 "proxy",
                 "4711",
                 "s16le",
@@ -536,7 +536,7 @@ class BrowserEndpointCheckpointUnitTest(unittest.TestCase):
             )
             healthcheck = root / "healthcheck-novnc.sh"
             healthcheck.write_text(
-                (PROJECT_ROOT / "container/healthcheck-novnc.sh")
+                (PROJECT_ROOT / "archive/container/healthcheck-novnc.sh")
                 .read_text(encoding="utf-8")
                 .replace("  python -c", f"  {shlex.quote(str(fake_python))} -c"),
                 encoding="utf-8",
@@ -590,7 +590,9 @@ class NasPreflightCheckpointUnitTest(unittest.TestCase):
                 encoding="utf-8",
             )
             (project / "container").mkdir()
-            (project / "container/Dockerfile").write_text("FROM scratch\n", encoding="utf-8")
+            (project / "archive" / "container").mkdir(parents=True)
+            (project / "archive" / "container" / "Dockerfile").write_text("FROM scratch\n", encoding="utf-8")
+            (project / "container" / "Dockerfile.ultra").write_text("FROM scratch\n", encoding="utf-8")
 
             fake_docker = project / "docker"
             write_executable(

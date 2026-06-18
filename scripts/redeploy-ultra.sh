@@ -42,18 +42,34 @@ fi
 
 ssh "$HOST" "sudo sh -c 'cd '\''$TARGET'\'' && RA2_COMPOSE_ULTRA=1 RA2_COMPOSE_ULTRA_UDP=1 RA2_COMPOSE_ULTRA_UDP_HOST=${RA2_COMPOSE_ULTRA_UDP_HOST:-1} . ./scripts/lib.sh; sh coturn/update_coturn_ip.sh 2>/dev/null || true; run_compose .env ${compose_action} ${SERVICES} ra2-coturn'"
 
-echo "[redeploy-ultra] optional remote TURN probe (VPN on): sh scripts/probe-webrtc-turn-remote.sh"
+echo "[redeploy-ultra] optional remote TURN probe (VPN on): sh scripts/archive/probe-webrtc-turn-remote.sh"
+
+wait_for_container_healthy() {
+  container="$1"
+  attempt=0
+  while [ "$attempt" -lt 36 ]; do
+    health="$(ssh "$HOST" "sudo /usr/local/bin/docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}running{{end}}' '$container' 2>/dev/null" || true)"
+    if [ "$health" = "healthy" ] || [ "$health" = "running" ]; then
+      return 0
+    fi
+    attempt=$((attempt + 1))
+    sleep 5
+  done
+  echo "[redeploy-ultra] WARN: ${container} not healthy after wait (status=${health:-unknown})"
+  return 1
+}
 
 for service in $SERVICES; do
   echo "[redeploy-ultra] verifying ${service}"
   container="$(player_container "$service")"
+  wait_for_container_healthy "$container" || true
   ssh "$HOST" "sudo sh -c 'cd '\''$TARGET'\'' && . ./scripts/lib.sh && run_docker exec ${container} sh -lc '\\''
     set -eu
     test -x /opt/ra2/stream-helper || { echo \"stream-helper missing\"; exit 1; }
     pgrep -f ra2-stream-gateway.py >/dev/null || { echo \"gateway not running\"; exit 1; }
     pgrep -f \"Xvfb :1\" >/dev/null || { echo \"Xvfb missing\"; exit 1; }
-    ! pgrep -f websockify >/dev/null || { echo \"websockify should be disabled in ultra mode\"; exit 1; }
-    ! pgrep -f x11vnc >/dev/null || { echo \"x11vnc should be disabled in ultra mode\"; exit 1; }
+    pgrep -x websockify >/dev/null && { echo \"websockify should be disabled in ultra mode\"; exit 1; }
+    pgrep -x x11vnc >/dev/null && { echo \"x11vnc should be disabled in ultra mode\"; exit 1; }
     env | grep -E \"^ULTRA_VIDEO_|^ULTRA_GATEWAY_|^PLAYER_SERIAL=\"
   '\\'''"
   port="$(player_http_port "$service")"

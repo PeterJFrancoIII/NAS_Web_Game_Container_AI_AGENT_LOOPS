@@ -162,7 +162,7 @@ class UltraPlayRemoteIceContractTest(unittest.TestCase):
         self.assertIn("run-webrtc-tests.sh", deploy_tests)
 
     def test_remote_turn_probe_script_exists(self) -> None:
-        probe = PROJECT_ROOT / "scripts" / "probe-webrtc-turn-remote.sh"
+        probe = PROJECT_ROOT / "scripts" / "archive" / "probe-webrtc-turn-remote.sh"
         self.assertTrue(probe.is_file())
         content = probe.read_text(encoding="utf-8")
         self.assertIn("turn-ice.json", content)

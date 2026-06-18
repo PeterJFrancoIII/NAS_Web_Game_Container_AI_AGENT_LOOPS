@@ -12,7 +12,7 @@ EXPECTED_CODEC="${WEBRTC_VIDEO_CODEC:-}"
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
 
 echo "[redeploy-low-memory] syncing project to ${HOST}:${TARGET}"
-NAS_HOST="$HOST" NAS_TARGET="$TARGET" sh "$SCRIPT_DIR/sync-to-nas.sh"
+NAS_HOST="$HOST" NAS_TARGET="$TARGET" sh "$SCRIPT_DIR/../sync-to-nas.sh"
 
 echo "[redeploy-low-memory] preflight memory check on NAS"
 ssh "$HOST" "cd '$TARGET' && RA2_MEMORY_STRICT=0 sh scripts/check-low-latency-host.sh" || true

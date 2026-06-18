@@ -14,12 +14,12 @@ Run before any Moonlight experiment:
 
 ```bash
 sh scripts/check-host-prerequisites.sh
-sh scripts/check-moonlight-ready.sh
+sh scripts/archive/check-moonlight-ready.sh
 ```
 
 Hard requirements:
 
-- `/dev/dri/renderD128` with H.264 and HEVC VA-API profiles (`scripts/check-transcode.sh`)
+- `/dev/dri/renderD128` with H.264 and HEVC VA-API profiles (`scripts/archive/check-transcode.sh`)
 - `/dev/uinput` loaded (manual: `scripts/prepare-streaming-session.sh`; boot task deferred)
 - **6 GB RAM** production baseline (1.7 GB stock RAM is fallback/testing only)
 - Wired **2.5GbE or 1GbE** for latency measurements
@@ -89,7 +89,7 @@ Wolf logs should show `Using h264 encoder: qsv` and `Using zero copy pipeline on
 ## Compare against WebRTC fallback
 
 ```bash
-sh scripts/compare-moonlight-webrtc.sh
+sh scripts/archive/compare-moonlight-webrtc.sh
 ```
 
 | Metric | WebRTC (`remote.html`) | Moonlight |

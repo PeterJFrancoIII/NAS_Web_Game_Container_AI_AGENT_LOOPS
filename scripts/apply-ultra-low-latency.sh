@@ -59,4 +59,4 @@ sh "$SCRIPT_DIR/check-transcode.sh" ra2-player-1 || true
 echo "=== done ==="
 echo "Stable play: remote.html?signal=6083&input=6085"
 echo "HEVC test: set WEBRTC_VIDEO_CODEC=H265 in .env, recreate, open remote.html?codec=H265"
-echo "UDP test:  RA2_COMPOSE_WEBRTC_UDP=1 sudo sh scripts/redeploy-webrtc-udp.sh"
+echo "UDP test:  RA2_COMPOSE_WEBRTC_UDP=1 sudo sh scripts/archive/redeploy-webrtc-udp.sh"

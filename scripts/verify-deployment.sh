@@ -170,7 +170,7 @@ if [ "${RA2_COMPOSE_WEBRTC:-0}" = "1" ]; then
     pass "WebRTC ICE reachability passed"
   else
     printf '[WARN] WebRTC ICE/media ports may be blocked upstream\n'
-    printf '       Run: sh scripts/check-webrtc-ice-reachability.sh\n'
+    printf '       Run: sh scripts/archive/check-webrtc-ice-reachability.sh\n'
   fi
 fi
 
@@ -194,7 +194,7 @@ if sh "$SCRIPT_DIR/check-host-transcode.sh"; then
   pass "host i915 media engine is ready"
 else
   printf '[WARN] host i915 media engine is not ready (Synology default GuC/HuC disabled)\n'
-  printf '       Run: sudo sh scripts/enable-host-transcode.sh\n'
+  printf '       Run: sudo sh scripts/archive/enable-host-transcode.sh\n'
 fi
 
 note "VA-API / FFmpeg transcoding (optional on DS225+)"

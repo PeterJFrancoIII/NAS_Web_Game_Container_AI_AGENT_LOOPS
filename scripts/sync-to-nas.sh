@@ -9,7 +9,7 @@ echo "Syncing $SOURCE to $HOST:$TARGET"
 
 cd "$SOURCE"
 TAR_REMOTE="mkdir -p '$TARGET' && tar xzf - -C '$TARGET'"
-CHMOD_REMOTE="find '$TARGET' -name '._*' -delete 2>/dev/null || true; chmod +x '$TARGET'/scripts/*.sh '$TARGET'/container/entrypoint.sh 2>/dev/null || true"
+CHMOD_REMOTE="find '$TARGET' -name '._*' -delete 2>/dev/null || true; chmod +x '$TARGET'/scripts/*.sh '$TARGET'/scripts/archive/*.sh '$TARGET'/container/entrypoint-ultra.sh '$TARGET'/archive/container/entrypoint.sh 2>/dev/null || true"
 if ! ssh "$HOST" "test -d '$TARGET' && test -w '$TARGET'" 2>/dev/null; then
   TAR_REMOTE="sudo mkdir -p '$TARGET' && sudo tar xzf - -C '$TARGET'"
   CHMOD_REMOTE="sudo find '$TARGET' -name '._*' -delete 2>/dev/null || true; sudo chmod +x '$TARGET'/scripts/*.sh '$TARGET'/container/entrypoint.sh 2>/dev/null || true"

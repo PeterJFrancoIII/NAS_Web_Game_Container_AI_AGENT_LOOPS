@@ -5,10 +5,10 @@ ARG WEBSOCKIFY_REF=v0.12.0
 ARG WINE_BUILD=10.8
 ARG WINE_VARIANT=amd64-wow64
 
-COPY container/patch-novnc.sh /opt/ra2/patch-novnc.sh
-COPY container/latency-overlay.js /opt/ra2/latency-overlay.js
-COPY container/cursor-lock.js /opt/ra2/cursor-lock.js
-COPY container/remote/ /opt/ra2/remote/
+COPY archive/container/patch-novnc.sh /opt/ra2/patch-novnc.sh
+COPY archive/container/latency-overlay.js /opt/ra2/latency-overlay.js
+COPY archive/container/cursor-lock.js /opt/ra2/cursor-lock.js
+COPY archive/container/remote/ /opt/ra2/remote/
 
 RUN printf '\nDisableSandbox\nNoExtract = usr/share/doc/* usr/share/help/* usr/share/locale/* usr/share/man/* usr/share/licenses/*\n' >> /etc/pacman.conf \
     && pacman -Syu --noconfirm \
@@ -71,24 +71,24 @@ RUN printf '\nDisableSandbox\nNoExtract = usr/share/doc/* usr/share/help/* usr/s
 
 COPY container/asound.conf /etc/asound.conf
 COPY container/pulse/ /opt/ra2/pulse/
-COPY container/websockify-tokens.cfg /opt/ra2/websockify-tokens.cfg
-COPY --chown=commander:commander container/audio-proxy.sh /opt/ra2/audio-proxy.sh
-COPY --chown=commander:commander container/latency-proxy.sh /opt/ra2/latency-proxy.sh
-COPY --chown=commander:commander container/latency-overlay.js /opt/ra2/latency-overlay.js
-COPY --chown=commander:commander container/cursor-lock.js /opt/ra2/cursor-lock.js
+COPY archive/container/websockify-tokens.cfg /opt/ra2/websockify-tokens.cfg
+COPY --chown=commander:commander archive/container/audio-proxy.sh /opt/ra2/audio-proxy.sh
+COPY --chown=commander:commander archive/container/latency-proxy.sh /opt/ra2/latency-proxy.sh
+COPY --chown=commander:commander archive/container/latency-overlay.js /opt/ra2/latency-overlay.js
+COPY --chown=commander:commander archive/container/cursor-lock.js /opt/ra2/cursor-lock.js
 COPY --chown=commander:commander container/start-pulseaudio.sh /opt/ra2/start-pulseaudio.sh
-COPY --chown=commander:commander container/start-websockify.sh /opt/ra2/start-websockify.sh
-COPY --chown=commander:commander container/start-x11vnc.sh /opt/ra2/start-x11vnc.sh
-COPY --chown=commander:commander container/healthcheck-novnc.sh /opt/ra2/healthcheck-novnc.sh
+COPY --chown=commander:commander archive/container/start-websockify.sh /opt/ra2/start-websockify.sh
+COPY --chown=commander:commander archive/container/start-x11vnc.sh /opt/ra2/start-x11vnc.sh
+COPY --chown=commander:commander archive/container/healthcheck-novnc.sh /opt/ra2/healthcheck-novnc.sh
 COPY --chown=commander:commander container/webrtc-media.py /opt/ra2/webrtc-media.py
 COPY --chown=commander:commander container/webrtc-media-helper.c /opt/ra2/webrtc-media-helper.c
-COPY --chown=commander:commander container/input-proxy.py /opt/ra2/input-proxy.py
-COPY --chown=commander:commander container/uinput_backend.py /opt/ra2/uinput_backend.py
+COPY --chown=commander:commander archive/container/input-proxy.py /opt/ra2/input-proxy.py
+COPY --chown=commander:commander archive/container/uinput_backend.py /opt/ra2/uinput_backend.py
 COPY --chown=commander:commander container/start-webrtc.sh /opt/ra2/start-webrtc.sh
-COPY --chown=commander:commander container/start-input-proxy.sh /opt/ra2/start-input-proxy.sh
-COPY --chown=commander:commander container/remote/ /opt/ra2/remote/
-COPY --chown=commander:commander container/entrypoint.sh /opt/ra2/entrypoint.sh
-COPY --chown=commander:commander container/supervisord.conf /opt/ra2/supervisord.conf
+COPY --chown=commander:commander archive/container/start-input-proxy.sh /opt/ra2/start-input-proxy.sh
+COPY --chown=commander:commander archive/container/remote/ /opt/ra2/remote/
+COPY --chown=commander:commander archive/container/entrypoint.sh /opt/ra2/entrypoint.sh
+COPY --chown=commander:commander archive/container/supervisord.conf /opt/ra2/supervisord.conf
 
 RUN gcc /opt/ra2/webrtc-media-helper.c -o /opt/ra2/webrtc-media-helper \
       $(pkg-config --cflags --libs gstreamer-1.0 gstreamer-webrtc-1.0 gstreamer-sdp-1.0) \

@@ -6,7 +6,7 @@ SCRIPT_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/lib.sh"
 
 ENV_FILE="${ENV_FILE:-.env}"
-SERVICE="${RA2_ULTRA_SERVICE:-ra2-player-1}"
+SERVICE="${RA2_ULTRA_SERVICE:-$(read_env_value PLAYER1_CONTAINER Cloud_Gaming_Player1 "$ENV_FILE")}"
 WARN_ONLY="${RA2_ULTRA_WARN_ONLY:-0}"
 
 section() {
@@ -38,9 +38,9 @@ run_docker exec "$SERVICE" sh -lc '
   set -eu
   pgrep -af "Xvfb :1" || { echo "missing Xvfb"; exit 1; }
   pgrep -af ra2-stream-gateway.py || { echo "missing stream gateway"; exit 1; }
-  pgrep -af stream-helper && echo "WARN: stream-helper running without client" || true
-  pgrep -af websockify && { echo "websockify should not run in ultra mode"; exit 1; } || true
-  pgrep -af x11vnc && { echo "x11vnc should not run in ultra mode"; exit 1; } || true
+  pgrep -x stream-helper >/dev/null && echo "WARN: stream-helper running without client" || true
+  pgrep -x websockify >/dev/null && { echo "websockify should not run in ultra mode"; exit 1; }
+  pgrep -x x11vnc >/dev/null && { echo "x11vnc should not run in ultra mode"; exit 1; }
   echo "process check ok"
 '
 
@@ -74,7 +74,7 @@ run_docker stats --no-stream "$SERVICE" 2>/dev/null || true
 
 printf '\nUltra profile checks complete.'
 case "$SERVICE" in
-  ra2-player-2)
+  ra2-player-2|Cloud_Gaming_Player2)
     port="$(read_env_value PLAYER2_HTTP_PORT 6082 "$ENV_FILE")"
     printf ' Open https://<NAS>:%s/ in Chromium.\n' "$port"
     ;;

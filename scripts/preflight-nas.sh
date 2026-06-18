@@ -43,7 +43,7 @@ for dir in "$PROJECT_ROOT" "$COMPOSE_DIR" "$ASSETS_DIR" "$PREFIX1_DIR" "$PREFIX2
   fi
 done
 
-for file in "$COMPOSE_DIR/compose.yaml" "$COMPOSE_DIR/container/Dockerfile" "$COMPOSE_DIR/.env"; do
+for file in "$COMPOSE_DIR/compose.yaml" "$COMPOSE_DIR/archive/container/Dockerfile" "$COMPOSE_DIR/container/Dockerfile.ultra" "$COMPOSE_DIR/.env"; do
   if [ -f "$file" ]; then
     ok "File exists: $file"
   else

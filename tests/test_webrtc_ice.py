@@ -46,8 +46,15 @@ SAMPLE_MDNS_CANDIDATE = (
 
 
 class WebRtcMediaIceTest(unittest.TestCase):
+    PUBLIC_IP = "108.2.161.76"
+
     def setUp(self):
-        self.wm = load_webrtc_media()
+        self._gethost_patcher = patch(
+            "socket.gethostbyname", return_value=self.PUBLIC_IP
+        )
+        self._gethost_patcher.start()
+        self.addCleanup(self._gethost_patcher.stop)
+        self.wm = load_webrtc_media(public_ip=self.PUBLIC_IP)
 
     def test_expand_private_candidate_includes_lan_and_public(self):
         expanded = self.wm._expand_ice_candidates(SAMPLE_HOST_CANDIDATE)

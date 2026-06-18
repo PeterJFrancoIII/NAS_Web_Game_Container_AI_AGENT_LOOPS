@@ -2,6 +2,7 @@
 
 **Repo:** `NAS_Web_Game_Container_AI_AGENT_LOOPS`  
 **Frozen reference:** `synology-ra2-arch` (never modify)  
+**Live NAS:** MediaServer2 — RA2 stack deployed for live troubleshooting  
 **Production path:** Ultra browser streaming — `compose.yaml` + `compose.https.yaml` + `compose.ultra.yaml` + `compose.ultra-udp.yaml` + `compose.ultra-udp-host.yaml`
 
 ## Goals
@@ -12,76 +13,72 @@
 
 ---
 
-## Phase 1 — Compose archive layout (current)
+## Phase 1 — Compose archive layout ✅
 
 | Action | Detail |
 |--------|--------|
 | Move | 10 archived overlays → `archive/compose/` |
 | Keep at root | `compose.yaml`, `compose.https.yaml`, `compose.ultra*.yaml`, `compose.player*-network.yaml` |
 | Update | `scripts/lib.sh` — `ARCHIVED_COMPOSE_DIR=archive/compose` |
-| Update | Docs (`ARCHIVED_EXPERIMENTS.md`, experiment guides, `DEPLOY_SYNOLOGY.md`) |
-| Update | Archived-profile scripts (`redeploy-moonlight-poc.sh`, `check-transcode.sh`, etc.) |
-| Verify | `sh scripts/run-webrtc-tests.sh`, `python3 -m pytest tests/` |
-
-**Done when:** Tests pass; `run_compose` with `RA2_COMPOSE_ULTRA=1` still uses root ultra files only.
 
 ---
 
-## Phase 2 — Script consolidation (planned)
+## Phase 2 — Script consolidation ✅
 
-- Group archived deploy scripts under `scripts/archive/` or prefix with `archive-`.
-- Deduplicate `redeploy-webrtc*.sh` vs ultra path; document which are historical.
-- Add `scripts/compose-stack.sh` helper that prints effective `-f` args for debugging.
-
----
-
-## Phase 3 — Container module archive (planned)
-
-- Move unused WebRTC/noVNC modules (see `docs/ARCHIVED_EXPERIMENTS.md`) to `archive/container/`.
-- Keep `container/Dockerfile.ultra`, `supervisord.ultra.conf`, ultra play stack at runtime paths.
-- Update image build context and contract tests.
+| Action | Detail |
+|--------|--------|
+| Move | 17 experiment scripts → `scripts/archive/` |
+| Add | `scripts/compose-stack.sh` — print effective `-f` args |
+| Dedup | `run_compose()` now builds from `compose_file_args()` |
+| Fix | `compose_file_args()` uses `*_overlay_enabled()` env flags (not `extra` param) |
+| Docs | `scripts/archive/README.md` |
 
 ---
 
-## Phase 4 — Documentation and skills sync (planned)
+## Phase 3 — Container module archive ✅
 
-- Update `nas-golden-master-index` skill with `archive/compose/` paths.
-- Sync `context-pack/agent/` distillate after application refactor stabilizes.
-- Refresh `docs/CONSOLIDATED_ARCHITECTURE.md` directory map.
+| Action | Detail |
+|--------|--------|
+| Move | Legacy noVNC/WebRTC modules → `archive/container/` |
+| Keep in `container/` | `Dockerfile.ultra`, `supervisord.ultra*.conf`, `remote-ultra/`, `webrtc-media.py` (UDP ultra) |
+| Update | `compose.yaml` dockerfile → `archive/container/Dockerfile`; volume mounts → `archive/container/…` |
+| Docs | `archive/container/README.md` |
+
+---
+
+## Phase 4 — Documentation sync ✅
+
+- `docs/ARCHIVED_EXPERIMENTS.md` — archive paths
+- `docs/CONSOLIDATED_ARCHITECTURE.md` — directory map
+- `MISSION.md` — phase status
 
 ---
 
 ## Phase 5 — CI and deploy gate (planned)
 
-- GitHub workflow: `run-webrtc-tests.sh` + pytest on push.
-- Optional: smoke `docker compose config` for ultra stack only.
-- Human-gated NAS deploy remains via `scripts/redeploy-ultra.sh`.
+- GitHub workflow: `run-webrtc-tests.sh` + pytest on push
+- Optional: `RA2_COMPOSE_ULTRA=1 sh scripts/compose-stack.sh` smoke in CI
 
 ---
 
-## Archived compose inventory
+## Debug commands
 
-| File | Profile |
-|------|---------|
-| `compose.webrtc.yaml` | Legacy `remote.html` WebRTC |
-| `compose.webrtc-host.yaml` | WebRTC host network |
-| `compose.webrtc-udp.yaml` | WebRTC UDP ICE |
-| `compose.webrtc-uinput.yaml` | WebRTC + uinput |
-| `compose.wolf.yaml` | Moonlight Wolf experiment |
-| `compose.sunshine.yaml` | Moonlight Sunshine experiment |
-| `compose.moonlight-uinput.yaml` | Moonlight uinput overlay |
-| `compose.selkies-experiment.yaml` | Selkies/Webtop |
-| `compose.tailscale.yaml` | Tailscale WAN |
-| `compose.transcode.yaml` | VA-API transcode overlay |
+```bash
+# Effective production stack
+RA2_COMPOSE_ULTRA=1 RA2_COMPOSE_ULTRA_UDP=1 RA2_COMPOSE_ULTRA_UDP_HOST=1 sh scripts/compose-stack.sh
+
+# Deploy
+NAS_HOST=MediaServer2 sh scripts/redeploy-ultra.sh
+```
 
 ## Production compose inventory (repo root)
 
 | File | Role |
 |------|------|
 | `compose.yaml` | Base RA2 Wine + Xvfb services |
-| `compose.https.yaml` | TLS mounts (auto when cert present) |
-| `compose.player1-network.yaml` | Player 1 bridge (disabled when ultra-udp-host) |
+| `compose.https.yaml` | TLS mounts |
+| `compose.player1-network.yaml` | Player 1 bridge |
 | `compose.player2-network.yaml` | Player 2 macvlan |
 | `compose.ultra.yaml` | Ultra Arch browser streaming |
-| `compose.ultra-udp.yaml` | Coturn / UDP ICE for ultra |
-| `compose.ultra-udp-host.yaml` | Host-network UDP mode (golden master) |
+| `compose.ultra-udp.yaml` | Coturn / UDP ICE |
+| `compose.ultra-udp-host.yaml` | Host-network UDP (golden master) |

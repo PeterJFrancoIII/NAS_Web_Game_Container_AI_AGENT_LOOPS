@@ -33,7 +33,7 @@ This project implements the consolidated research at:
 
 | Requirement | Check |
 |-------------|-------|
-| `/dev/dri/renderD128` | `sh scripts/check-transcode.sh` |
+| `/dev/dri/renderD128` | `sh scripts/archive/check-transcode.sh` |
 | VA-API H.264/HEVC | `vainfo` inside container |
 | TLS for browser | `docs/HTTPS.md` |
 | Router forwards | TCP `6081-6082` for DDNS play |
@@ -50,12 +50,27 @@ uinput and Moonlight host prep are only needed for archived native streaming exp
 | GameStream Wolf/Sunshine (archived) | 47984-48010 | LAN/VPN only |
 | Optional DSM reverse proxy | 8443 TCP | `setup-synology-ra2-reverse-proxy.sh` |
 
+## Repository layout (refactored)
+
+```text
+compose.yaml                    # base + archived noVNC image ref
+compose.ultra*.yaml             # production ultra overlays
+container/Dockerfile.ultra      # production image
+container/remote-ultra/         # production browser client
+archive/compose/                # archived compose overlays
+archive/container/                # archived noVNC/WebRTC modules
+scripts/redeploy-ultra.sh       # production deploy
+scripts/compose-stack.sh        # debug effective -f stack
+scripts/archive/                # experiment deploy/check scripts
+```
+
 ## Diagnostics
 
 ```bash
 RA2_COMPOSE_ULTRA=1 sh scripts/check-ultra-ready.sh
+RA2_COMPOSE_ULTRA=1 RA2_COMPOSE_ULTRA_UDP=1 RA2_COMPOSE_ULTRA_UDP_HOST=1 sh scripts/compose-stack.sh
 sudo sh scripts/restart-audio-ultra.sh ra2-player-1
 sudo sh scripts/cleanup-golden-master.sh
 ```
 
-Archived experiment checks: `check-moonlight-ready.sh`, `check-webrtc-ice-reachability.sh`.
+Archived experiment checks: `scripts/archive/check-moonlight-ready.sh`, `scripts/archive/check-webrtc-ice-reachability.sh`.

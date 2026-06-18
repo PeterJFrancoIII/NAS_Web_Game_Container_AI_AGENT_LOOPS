@@ -10,10 +10,10 @@ BUILD_ON_NAS="${RA2_WEBRTC_BUILD:-0}"
 EXPECTED_CODEC="${WEBRTC_VIDEO_CODEC:-}"
 
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
-PROJECT_ROOT="$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)"
+PROJECT_ROOT="$(CDPATH= cd -- "$SCRIPT_DIR/../.." && pwd)"
 
 echo "[redeploy-webrtc] syncing project to ${HOST}:${TARGET}"
-NAS_HOST="$HOST" NAS_TARGET="$TARGET" sh "$SCRIPT_DIR/sync-to-nas.sh"
+NAS_HOST="$HOST" NAS_TARGET="$TARGET" sh "$SCRIPT_DIR/../sync-to-nas.sh"
 
 if [ "$BUILD_ON_NAS" = "1" ]; then
   echo "[redeploy-webrtc] rebuilding on NAS and recreating ${SERVICE}"

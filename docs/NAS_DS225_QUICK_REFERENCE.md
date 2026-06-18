@@ -36,7 +36,10 @@ Last verified: **2026-06-15** via SSH (`MediaServer2` over DDNS while VPN'd) **a
 | SSH port | **23921** (not 22) |
 | Mac SSH alias (DDNS) | `MediaServer2` |
 | Mac SSH alias (LAN) | `MediaServer2Local` |
+| DSM (HTTPS) | **peterjfrancoiii2.synology.me:5001** |
 | Mac SSH key | `~/.ssh/synology_ds225p_rsa` |
+
+**Agent rule:** Do **not** stop, restart, recreate, or redeploy any running DSM Docker containers on MediaServer2. See `docs/INFRASTRUCTURE_BOUNDARY.md`.
 
 **Routing rule:** NAS host traffic stays on LAN. Only containers behind **Gluetun** use Surfshark VPN.
 

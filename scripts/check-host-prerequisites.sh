@@ -77,10 +77,10 @@ else
 fi
 
 note "VA-API transcode smoke test (${CONTAINER})"
-if sh "$SCRIPT_DIR/check-transcode.sh" "$CONTAINER"; then
+if sh "$SCRIPT_DIR/archive/check-transcode.sh" "$CONTAINER"; then
   pass "VA-API transcode checks passed"
 else
-  fail "VA-API transcode checks failed — run scripts/enable-host-transcode.sh"
+  fail "VA-API transcode checks failed — run scripts/archive/enable-host-transcode.sh"
 fi
 
 if [ "$FAIL" -ne 0 ]; then

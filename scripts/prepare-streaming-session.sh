@@ -27,7 +27,7 @@ if [ -d /dev/dri ]; then
   ls -l /dev/dri/renderD128 2>/dev/null || true
   printf 'OK: /dev/dri permissions set for this session\n'
 else
-  printf 'WARN: /dev/dri missing — run scripts/enable-host-transcode.sh\n'
+  printf 'WARN: /dev/dri missing — run scripts/archive/enable-host-transcode.sh\n'
 fi
 
 if sh "$SCRIPT_DIR/enable-uinput.sh" 2>/dev/null; then

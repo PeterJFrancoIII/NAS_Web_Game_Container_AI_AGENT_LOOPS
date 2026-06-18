@@ -12,18 +12,25 @@ The files below remain in the repository for reference and contract tests but ar
 | Moonlight + Wolf/Sunshine | `archive/compose/compose.wolf.yaml`, `compose.sunshine.yaml`, `compose.moonlight-uinput.yaml` | `docs/MOONLIGHT_EXPERIMENT.md` |
 | Selkies / Webtop | `archive/compose/compose.selkies-experiment.yaml` | `docs/SELKIES_EXPERIMENT.md` |
 | Tailscale WAN Moonlight | `archive/compose/compose.tailscale.yaml` | `docs/TAILSCALE.md` |
-| noVNC-only base image | `container/Dockerfile`, `container/supervisord.conf`, `compose.yaml` without ultra overlay | `docs/HTTPS.md` (vnc.html paths) |
+| noVNC-only base image | `archive/container/Dockerfile`, `archive/container/supervisord.conf`, `compose.yaml` without ultra overlay | `docs/HTTPS.md` (vnc.html paths) |
 | VA-API transcode overlay | `archive/compose/compose.transcode.yaml` | `docs/DEPLOY_SYNOLOGY.md` |
 | RAM debug player | `compose.ultra.yaml` profile `ra2-player-dev`, `scripts/dev-ram-ultra.sh` | `scripts/dev-ram-ultra.sh` header |
 
-## Archived container modules (ultra image does not use these at runtime)
+## Archived container modules
 
-- `container/remote/remote.html`, `remote-play.js` — WebRTC client
-- `container/webrtc-media.py`, `webrtc-media-helper.c`, `start-webrtc.sh`
-- `container/audio-proxy.sh`, `latency-proxy.sh`, `start-websockify.sh`, `start-x11vnc.sh`
-- `container/patch-novnc.sh`, `cursor-lock.js`, `latency-overlay.js`
+In `archive/container/`:
 
-These may still exist inside older `ra2-lan-party:latest` images built from `container/Dockerfile`; the ultra image uses `Dockerfile.ultra` and `supervisord.ultra.conf` instead.
+- `remote/` — legacy WebRTC browser client (`remote.html`)
+- `Dockerfile`, `supervisord.conf`, `entrypoint.sh` — noVNC base image
+- `audio-proxy.sh`, `latency-proxy.sh`, `start-websockify.sh`, `start-x11vnc.sh`
+- `patch-novnc.sh`, `cursor-lock.js`, `latency-overlay.js`
+- `input-proxy.py`, `uinput_backend.py`, `start-input-proxy.sh`
+
+**Still in `container/`** (production ultra + UDP WebRTC):
+
+- `Dockerfile.ultra`, `supervisord.ultra.conf`, `supervisord.ultra-udp.conf`
+- `webrtc-media.py`, `webrtc-media-helper.c`, `start-webrtc.sh`
+- `ra2-stream-gateway.py`, `remote-ultra/`, `stream-helper.c`
 
 ## Cleaning up on the NAS
 

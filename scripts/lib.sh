@@ -3,9 +3,14 @@
 export PATH="/usr/local/bin:/usr/sbin:/sbin:$PATH"
 DOCKER="${DOCKER:-/usr/local/bin/docker}"
 ARCHIVED_COMPOSE_DIR="${ARCHIVED_COMPOSE_DIR:-archive/compose}"
+ARCHIVED_CONTAINER_DIR="${ARCHIVED_CONTAINER_DIR:-archive/container}"
 
 archived_compose_file() {
   printf '%s/%s' "$ARCHIVED_COMPOSE_DIR" "$1"
+}
+
+archived_container_file() {
+  printf '%s/%s' "$ARCHIVED_CONTAINER_DIR" "$1"
 }
 
 run_docker() {
@@ -117,17 +122,20 @@ compose_file_args() {
   if tls_material_present "$env_file"; then
     printf '%s\n' "-f" "compose.https.yaml"
   fi
-  if [ "$extra" = "transcode" ]; then
+  if transcode_overlay_enabled; then
     printf '%s\n' "-f" "$(archived_compose_file compose.transcode.yaml)"
   fi
-  if [ "$extra" = "webrtc" ]; then
+  if webrtc_overlay_enabled; then
     printf '%s\n' "-f" "$(archived_compose_file compose.webrtc.yaml)"
   fi
-  if [ "$extra" = "webrtc-host" ]; then
+  if webrtc_host_overlay_enabled; then
     printf '%s\n' "-f" "$(archived_compose_file compose.webrtc-host.yaml)"
   fi
-  if [ "$extra" = "webrtc-udp" ]; then
+  if webrtc_udp_overlay_enabled; then
     printf '%s\n' "-f" "$(archived_compose_file compose.webrtc-udp.yaml)"
+  fi
+  if webrtc_uinput_overlay_enabled; then
+    printf '%s\n' "-f" "$(archived_compose_file compose.webrtc-uinput.yaml)"
   fi
   if moonlight_sunshine_overlay_enabled; then
     printf '%s\n' "-f" "$(archived_compose_file compose.sunshine.yaml)"
@@ -215,53 +223,13 @@ run_compose() {
   env_file="${1:-.env}"
   shift
 
-  compose_args="-f compose.yaml"
-  if player1_bridge_network_enabled; then
-    compose_args="$compose_args -f compose.player1-network.yaml"
-  fi
-  compose_args="$compose_args -f compose.player2-network.yaml"
-  if tls_material_present "$env_file"; then
-    compose_args="$compose_args -f compose.https.yaml"
-  fi
-  if transcode_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.transcode.yaml)"
-  fi
-  if webrtc_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.webrtc.yaml)"
-  fi
-  if webrtc_host_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.webrtc-host.yaml)"
-  fi
-  if webrtc_udp_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.webrtc-udp.yaml)"
-  fi
-  if webrtc_uinput_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.webrtc-uinput.yaml)"
-  fi
-  if moonlight_sunshine_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.sunshine.yaml)"
-  fi
-  if moonlight_wolf_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.wolf.yaml)"
-  fi
-  if moonlight_uinput_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.moonlight-uinput.yaml)"
-  fi
-  if selkies_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.selkies-experiment.yaml)"
-  fi
-  if ultra_overlay_enabled; then
-    compose_args="$compose_args -f compose.ultra.yaml"
-  fi
-  if ultra_udp_overlay_enabled; then
-    compose_args="$compose_args -f compose.ultra-udp.yaml"
-  fi
-  if ultra_udp_host_overlay_enabled; then
-    compose_args="$compose_args -f compose.ultra-udp-host.yaml"
-  fi
-  if tailscale_overlay_enabled; then
-    compose_args="$compose_args -f $(archived_compose_file compose.tailscale.yaml)"
-  fi
+  compose_args=""
+  while IFS= read -r token; do
+    [ -n "$token" ] || continue
+    compose_args="$compose_args $token"
+  done <<EOF
+$(compose_file_args "$env_file")
+EOF
 
   # shellcheck disable=SC2086
   run_docker compose --env-file "$env_file" $compose_args "$@"

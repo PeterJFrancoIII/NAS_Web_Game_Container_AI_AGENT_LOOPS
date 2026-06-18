@@ -144,7 +144,7 @@ RA2_COMPOSE_TRANSCODE=1 docker compose --env-file .env -f compose.yaml -f archiv
 Verify VA-API visibility:
 
 ```bash
-sudo sh scripts/check-transcode.sh ra2-player-1
+sudo sh scripts/archive/check-transcode.sh ra2-player-1
 ```
 
 On Synology, Docker usually requires one `sudo` prompt for the whole script. The script does not call `sudo` again internally once it is already running as root.
@@ -156,7 +156,7 @@ sudo /usr/local/bin/docker exec ra2-player-1 sh -lc 'LIBVA_DRIVER_NAME=i965 vain
 sudo /usr/local/bin/docker exec ra2-player-1 sh -lc '/usr/bin/ffmpeg -hide_banner -encoders | grep -i vaapi'
 ```
 
-Healthy output should include H.264 and HEVC VA-API encode profiles in `vainfo`, plus passing `h264_vaapi` and `hevc_vaapi` smoke tests from `scripts/check-transcode.sh`.
+Healthy output should include H.264 and HEVC VA-API encode profiles in `vainfo`, plus passing `h264_vaapi` and `hevc_vaapi` smoke tests from `scripts/archive/check-transcode.sh`.
 
 If `vainfo` only reports `VAProfileNone` on the DS225+, check the Synology host i915 firmware state:
 
@@ -265,8 +265,8 @@ Pair the **Moonlight** client to the NAS LAN IP. For remote play, use Tailscale 
 Verify:
 
 ```bash
-sh scripts/check-moonlight-ready.sh
-sh scripts/compare-moonlight-webrtc.sh
+sh scripts/archive/check-moonlight-ready.sh
+sh scripts/archive/compare-moonlight-webrtc.sh
 ```
 
 ### noVNC (archived — base image only; disabled when `RA2_ENABLE_NOVNC_FALLBACK=0`)
@@ -289,7 +289,7 @@ If the NAS uses the secondary LAN IP, set `NAS_LAN_IP` in `.env` and regenerate 
 WebRTC is **not** the production path. See `docs/ARCHIVED_EXPERIMENTS.md`. Use it only when Moonlight is unavailable or for debugging. If video is connected but the screen is blank, run:
 
 ```bash
-sh scripts/check-webrtc-ice-reachability.sh
+sh scripts/archive/check-webrtc-ice-reachability.sh
 ```
 
 Enable the opt-in overlay when you need legacy browser remote play:
@@ -322,7 +322,7 @@ Verify:
 
 ```bash
 RA2_COMPOSE_WEBRTC=1 sudo sh scripts/verify-deployment.sh
-sh scripts/check-webrtc-ice-reachability.sh
+sh scripts/archive/check-webrtc-ice-reachability.sh
 ```
 
 ### Low-latency baseline (DS225+)
@@ -342,7 +342,7 @@ WEBRTC_VIDEO_REQUIRE_HW=1
 Redeploy from your workstation (sync + rebuild + SDP check):
 
 ```bash
-NAS_HOST=MediaServer2Local sh scripts/redeploy-webrtc.sh
+NAS_HOST=MediaServer2Local sh scripts/archive/redeploy-webrtc.sh
 ```
 
 Host preflight before play sessions:
@@ -429,10 +429,10 @@ RA2_ENABLE_LATENCY_PROXY=1
 - Use **wired 2.5GbE or 1GbE** on client and NAS when measuring latency.
 - Pause DSM **indexing**, **antivirus**, and **media thumbnail** scans during play.
 - Watch swap: `free -h` — swap use correlates with latency spikes on 2–4 GB RAM models.
-- Moonlight vs WebRTC comparison: `scripts/compare-moonlight-webrtc.sh`.
+- Moonlight vs WebRTC comparison: `scripts/archive/compare-moonlight-webrtc.sh`.
 - Tailscale direct-path check: `scripts/check-tailscale-direct.sh`.
 - Optional Selkies/Wayland comparison: see `docs/SELKIES_EXPERIMENT.md` and `scripts/compare-selkies-webrtc.sh`.
-- UDP ICE test profile: `RA2_COMPOSE_WEBRTC_UDP=1 sh scripts/redeploy-webrtc-udp.sh` (TCP remains fallback).
+- UDP ICE test profile: `RA2_COMPOSE_WEBRTC_UDP=1 sh scripts/archive/redeploy-webrtc-udp.sh` (TCP remains fallback).
 - HEVC test: set `WEBRTC_LATENCY_PRESET=experimental` or `WEBRTC_VIDEO_CODEC=H265`, then open `remote.html?codec=H265`.
 - Virtual input test: set `WEBRTC_INPUT_BACKEND=auto` (falls back to xdotool on Xvfb if uinput does not reach the game).
 

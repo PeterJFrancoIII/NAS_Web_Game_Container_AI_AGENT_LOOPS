@@ -83,10 +83,10 @@ services:
     volumes:
       - ./container/webrtc-media.py:/opt/ra2/webrtc-media.py:ro
       - ./container/webrtc-media-helper.c:/opt/ra2/webrtc-media-helper.c:ro
-      - ./container/input-proxy.py:/opt/ra2/input-proxy.py:ro
-      - ./container/uinput_backend.py:/opt/ra2/uinput_backend.py:ro
+      - ./archive/container/input-proxy.py:/opt/ra2/input-proxy.py:ro
+      - ./archive/container/uinput_backend.py:/opt/ra2/uinput_backend.py:ro
       - ./container/start-webrtc.sh:/opt/ra2/start-webrtc.sh:ro
-      - ./container/start-input-proxy.sh:/opt/ra2/start-input-proxy.sh:ro
+      - ./archive/container/start-input-proxy.sh:/opt/ra2/start-input-proxy.sh:ro
       - ./container/remote:/opt/ra2/remote:ro
 
   ra2-player-2:
@@ -135,8 +135,8 @@ services:
     volumes:
       - ./container/webrtc-media.py:/opt/ra2/webrtc-media.py:ro
       - ./container/webrtc-media-helper.c:/opt/ra2/webrtc-media-helper.c:ro
-      - ./container/input-proxy.py:/opt/ra2/input-proxy.py:ro
-      - ./container/uinput_backend.py:/opt/ra2/uinput_backend.py:ro
+      - ./archive/container/input-proxy.py:/opt/ra2/input-proxy.py:ro
+      - ./archive/container/uinput_backend.py:/opt/ra2/uinput_backend.py:ro
       - ./container/start-webrtc.sh:/opt/ra2/start-webrtc.sh:ro
-      - ./container/start-input-proxy.sh:/opt/ra2/start-input-proxy.sh:ro
+      - ./archive/container/start-input-proxy.sh:/opt/ra2/start-input-proxy.sh:ro
       - ./container/remote:/opt/ra2/remote:ro

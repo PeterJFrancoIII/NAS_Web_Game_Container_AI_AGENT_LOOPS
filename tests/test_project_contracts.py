@@ -188,12 +188,12 @@ class ComposeTopologyContractTest(unittest.TestCase):
         self.assertIn("/prefixes/player2-win32}:/home/commander/.wine:rw", compose)
         self.assertNotIn("/home/commander/.wine/drive_c/RA2:ro", compose)
         self.assertNotIn("/rmcache:/home/commander/.wine/drive_c/RA2/rmcache:rw", compose)
-        self.assertIn("./container/entrypoint.sh:/opt/ra2/entrypoint.sh:ro", compose)
-        self.assertIn("./container/patch-novnc.sh:/opt/ra2/patch-novnc.sh:ro", compose)
-        self.assertIn("./container/audio-proxy.sh:/opt/ra2/audio-proxy.sh:ro", compose)
-        self.assertIn("./container/latency-proxy.sh:/opt/ra2/latency-proxy.sh:ro", compose)
-        self.assertIn("./container/latency-overlay.js:/opt/ra2/latency-overlay.js:ro", compose)
-        self.assertIn("./container/cursor-lock.js:/opt/ra2/cursor-lock.js:ro", compose)
+        self.assertIn("./archive/container/entrypoint.sh:/opt/ra2/entrypoint.sh:ro", compose)
+        self.assertIn("./archive/container/patch-novnc.sh:/opt/ra2/patch-novnc.sh:ro", compose)
+        self.assertIn("./archive/container/audio-proxy.sh:/opt/ra2/audio-proxy.sh:ro", compose)
+        self.assertIn("./archive/container/latency-proxy.sh:/opt/ra2/latency-proxy.sh:ro", compose)
+        self.assertIn("./archive/container/latency-overlay.js:/opt/ra2/latency-overlay.js:ro", compose)
+        self.assertIn("./archive/container/cursor-lock.js:/opt/ra2/cursor-lock.js:ro", compose)
         self.assertIn("./container/asound.conf:/etc/asound.conf:ro", compose)
 
     def test_transcode_overlay_grants_gpu_access_without_changing_default_stack(self):
@@ -291,7 +291,7 @@ class ComposeTopologyContractTest(unittest.TestCase):
 
 class RuntimeImageContractTest(unittest.TestCase):
     def test_dockerfile_uses_arch_linux_wine_display_stack_and_non_root_user(self):
-        dockerfile = read("container/Dockerfile")
+        dockerfile = read("archive/container/Dockerfile")
 
         self.assertIn("FROM archlinux:latest", dockerfile)
         self.assertIn("NOVNC_REF=v1.5.0", dockerfile)
@@ -335,7 +335,7 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("GST_VAAPI_ALL_DRIVERS=1", dockerfile)
         self.assertIn("useradd -m -u 1000 -s /bin/bash commander", dockerfile)
         self.assertIn("COPY container/asound.conf /etc/asound.conf", dockerfile)
-        self.assertIn("COPY container/cursor-lock.js /opt/ra2/cursor-lock.js", dockerfile)
+        self.assertIn("COPY archive/container/cursor-lock.js /opt/ra2/cursor-lock.js", dockerfile)
         self.assertIn("webrtc-media.py", dockerfile)
         self.assertIn("input-proxy.py", dockerfile)
         self.assertIn("python-websockets", dockerfile)
@@ -350,8 +350,8 @@ class RuntimeImageContractTest(unittest.TestCase):
 
     def test_browser_audio_defaults_to_44100_hz_capture(self):
         pulse = read("container/pulse/default.pa")
-        proxy = read("container/audio-proxy.sh")
-        novnc_patch = read("container/patch-novnc.sh")
+        proxy = read("archive/container/audio-proxy.sh")
+        novnc_patch = read("archive/container/patch-novnc.sh")
         pulse_launcher = read("container/start-pulseaudio.sh")
 
         self.assertIn("rate=", pulse)
@@ -392,7 +392,7 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("rate=${NATIVE_RATE}", sync_audio)
 
     def test_browser_cursor_lock_supports_fullscreen_toggle_and_release_shortcut(self):
-        cursor_lock = read("container/cursor-lock.js")
+        cursor_lock = read("archive/container/cursor-lock.js")
 
         self.assertIn("requestPointerLock", cursor_lock)
         self.assertIn("requestFullscreen", cursor_lock)
@@ -405,8 +405,8 @@ class RuntimeImageContractTest(unittest.TestCase):
     def test_webrtc_remote_play_uses_xvfb_pulse_and_wss_signaling(self):
         helper = read("container/webrtc-media-helper.c")
         webrtc = read("container/webrtc-media.py")
-        input_proxy = read("container/input-proxy.py")
-        remote_js = read("container/remote/remote-play.js")
+        input_proxy = read("archive/container/input-proxy.py")
+        remote_js = read("archive/container/remote/remote-play.js")
 
         self.assertIn("ximagesrc", helper)
         self.assertIn("tcpclientsrc", helper)
@@ -483,8 +483,8 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("UINPUT_DEVICE=/dev/uinput", env_example)
 
     def test_remote_play_input_rate_limit_and_runtime_stats(self):
-        remote_js = read("container/remote/remote-play.js")
-        input_proxy = read("container/input-proxy.py")
+        remote_js = read("archive/container/remote/remote-play.js")
+        input_proxy = read("archive/container/input-proxy.py")
 
         self.assertIn("INPUT_MOVE_HZ", remote_js)
         self.assertIn("reportRuntimeStats", remote_js)
@@ -500,7 +500,7 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("move_dropped", input_proxy)
 
     def test_webrtc_redeploy_and_host_check_scripts_exist(self):
-        redeploy = read("scripts/redeploy-webrtc.sh")
+        redeploy = read("scripts/archive/redeploy-webrtc.sh")
         host_check = read("scripts/check-low-latency-host.sh")
         sync = read("scripts/sync-to-nas.sh")
         safe_repair = read("scripts/safe-repair-launch.sh")
@@ -514,7 +514,7 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("webrtc-media-helper", host_check)
         self.assertIn("/dev/dri", host_check)
         self.assertIn("sync-to-ram.sh", sync)
-        self.assertIn("RA2_COMPOSE_WEBRTC_UDP=1", read("scripts/redeploy-webrtc-udp.sh"))
+        self.assertIn("RA2_COMPOSE_WEBRTC_UDP=1", read("scripts/archive/redeploy-webrtc-udp.sh"))
         self.assertIn("compare-selkies-webrtc.sh", read("docs/SELKIES_EXPERIMENT.md"))
         self.assertIn("RA2_SAFE_BUILD", safe_repair)
         self.assertIn("--no-build --force-recreate", safe_repair)
@@ -524,12 +524,12 @@ class RuntimeImageContractTest(unittest.TestCase):
         compose = read("compose.yaml")
         env_example = read(".env.example")
         start_webrtc = read("container/start-webrtc.sh")
-        websockify = read("container/start-websockify.sh")
-        audio_proxy = read("container/audio-proxy.sh")
-        latency_proxy = read("container/latency-proxy.sh")
-        x11vnc = read("container/start-x11vnc.sh")
+        websockify = read("archive/container/start-websockify.sh")
+        audio_proxy = read("archive/container/audio-proxy.sh")
+        latency_proxy = read("archive/container/latency-proxy.sh")
+        x11vnc = read("archive/container/start-x11vnc.sh")
         host_check = read("scripts/check-low-latency-host.sh")
-        redeploy = read("scripts/redeploy-low-memory.sh")
+        redeploy = read("scripts/archive/redeploy-low-memory.sh")
 
         self.assertIn("two-player-low", env_example)
         self.assertIn("RA2_MEM_LIMIT=512m", env_example)
@@ -619,8 +619,8 @@ class RuntimeImageContractTest(unittest.TestCase):
     def test_consolidated_architecture_docs_and_boot_scripts(self):
         arch = read("docs/CONSOLIDATED_ARCHITECTURE.md")
         boot = read("scripts/dsm-boot-task.sh")
-        uinput = read("scripts/enable-uinput.sh")
-        selkies_deploy = read("scripts/redeploy-profile-selkies.sh")
+        uinput = read("scripts/archive/enable-uinput.sh")
+        selkies_deploy = read("scripts/archive/redeploy-profile-selkies.sh")
 
         self.assertIn("0 — Browser (production)", arch)
         self.assertIn("Ultra Arch", arch)
@@ -632,14 +632,14 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("RA2_COMPOSE_SELKIES=1", selkies_deploy)
 
     def test_webrtc_ice_reachability_and_host_prereq_scripts_exist(self):
-        ice = read("scripts/check-webrtc-ice-reachability.sh")
+        ice = read("scripts/archive/check-webrtc-ice-reachability.sh")
         prereq = read("scripts/check-host-prerequisites.sh")
-        moonlight = read("scripts/check-moonlight-ready.sh")
-        tailscale = read("scripts/check-tailscale-direct.sh")
+        moonlight = read("scripts/archive/check-moonlight-ready.sh")
+        tailscale = read("scripts/archive/check-tailscale-direct.sh")
 
         self.assertIn("WEBRTC_ICE_CANDIDATE_HOST", ice)
         self.assertIn("62001-62040", ice)
-        self.assertIn("check-transcode.sh", prereq)
+        self.assertIn("archive/check-transcode.sh", prereq)
         self.assertIn("6144", prereq)
         self.assertIn("ra2-sunshine-experiment", moonlight)
         self.assertIn("ra2-wolf-experiment", moonlight)
@@ -647,8 +647,8 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("41641", read("docs/TAILSCALE.md"))
 
     def test_remote_play_reports_actionable_ice_failures(self):
-        remote_js = read("container/remote/remote-play.js")
-        remote_html = read("container/remote/remote.html")
+        remote_js = read("archive/container/remote/remote-play.js")
+        remote_html = read("archive/container/remote/remote.html")
         media_py = read("container/webrtc-media.py")
         helper_c = read("container/webrtc-media-helper.c")
 
@@ -663,41 +663,41 @@ class RuntimeImageContractTest(unittest.TestCase):
 
     def test_shell_scripts_have_valid_syntax(self):
         checks = [
-            ("bash", "-n", PROJECT_ROOT / "container/entrypoint.sh"),
+            ("bash", "-n", PROJECT_ROOT / "archive/container/entrypoint.sh"),
             ("bash", "-n", PROJECT_ROOT / "container/start-pulseaudio.sh"),
-            ("sh", "-n", PROJECT_ROOT / "container/start-websockify.sh"),
-            ("sh", "-n", PROJECT_ROOT / "container/healthcheck-novnc.sh"),
-            ("bash", "-n", PROJECT_ROOT / "container/patch-novnc.sh"),
-            ("sh", "-n", PROJECT_ROOT / "container/latency-proxy.sh"),
+            ("sh", "-n", PROJECT_ROOT / "archive/container/start-websockify.sh"),
+            ("sh", "-n", PROJECT_ROOT / "archive/container/healthcheck-novnc.sh"),
+            ("bash", "-n", PROJECT_ROOT / "archive/container/patch-novnc.sh"),
+            ("sh", "-n", PROJECT_ROOT / "archive/container/latency-proxy.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/generate-tls-certs.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/ensure-tls.sh"),
-            ("sh", "-n", PROJECT_ROOT / "container/audio-proxy.sh"),
+            ("sh", "-n", PROJECT_ROOT / "archive/container/audio-proxy.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/prepare-nas.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/preflight-nas.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/build-image-nas.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/ingest-assets.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/bootstrap-nas.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/sync-to-nas.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/check-transcode.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/check-transcode.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/check-host-transcode.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/enable-host-transcode.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/enable-host-transcode.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/check-av-sync.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/apply-serial-fix.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/check-webrtc-ready.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/redeploy-webrtc.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/redeploy-low-memory.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/check-webrtc-ready.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/redeploy-webrtc.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/redeploy-low-memory.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/check-low-latency-host.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/redeploy-webrtc-udp.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/compare-selkies-webrtc.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/check-webrtc-ice-reachability.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/redeploy-webrtc-udp.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/compare-selkies-webrtc.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/check-webrtc-ice-reachability.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/check-host-prerequisites.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/check-moonlight-ready.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/check-tailscale-direct.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/compare-moonlight-webrtc.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/redeploy-moonlight-poc.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/redeploy-profile-selkies.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/check-moonlight-ready.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/check-tailscale-direct.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/compare-moonlight-webrtc.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/redeploy-moonlight-poc.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/redeploy-profile-selkies.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/dsm-boot-task.sh"),
-            ("sh", "-n", PROJECT_ROOT / "scripts/enable-uinput.sh"),
+            ("sh", "-n", PROJECT_ROOT / "scripts/archive/enable-uinput.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/prepare-streaming-session.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/redeploy-ultra.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/enable-ultra-player2.sh"),
@@ -706,9 +706,9 @@ class RuntimeImageContractTest(unittest.TestCase):
             ("sh", "-n", PROJECT_ROOT / "container/start-stream-gateway.sh"),
             ("sh", "-n", PROJECT_ROOT / "container/healthcheck-ultra.sh"),
             ("bash", "-n", PROJECT_ROOT / "container/entrypoint-ultra.sh"),
-            ("sh", "-n", PROJECT_ROOT / "container/start-x11vnc.sh"),
+            ("sh", "-n", PROJECT_ROOT / "archive/container/start-x11vnc.sh"),
             ("sh", "-n", PROJECT_ROOT / "container/start-webrtc.sh"),
-            ("sh", "-n", PROJECT_ROOT / "container/start-input-proxy.sh"),
+            ("sh", "-n", PROJECT_ROOT / "archive/container/start-input-proxy.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/admin-rebuild-check.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/verify-deployment.sh"),
             ("sh", "-n", PROJECT_ROOT / "scripts/validate-env.sh"),
@@ -730,7 +730,7 @@ class RuntimeImageContractTest(unittest.TestCase):
 
 class EntrypointContractTest(unittest.TestCase):
     def test_entrypoint_fails_fast_without_required_identity_and_assets(self):
-        entrypoint = read("container/entrypoint.sh")
+        entrypoint = read("archive/container/entrypoint.sh")
 
         self.assertIn("PLAYER_SERIAL is required", entrypoint)
         self.assertIn("VNC_PASSWORD is required", entrypoint)
@@ -742,7 +742,7 @@ class EntrypointContractTest(unittest.TestCase):
         self.assertIn('grep -aq "cnc-ddraw"', entrypoint)
 
     def test_entrypoint_initializes_prefix_once_without_copying_assets(self):
-        entrypoint = read("container/entrypoint.sh")
+        entrypoint = read("archive/container/entrypoint.sh")
 
         self.assertIn('if [ ! -f "${WINEPREFIX}/.ra2_initialized" ] || ! wine_prefix_ready; then', entrypoint)
         self.assertIn("touch \"${WINEPREFIX}/.ra2_initialized\"", entrypoint)
@@ -754,7 +754,7 @@ class EntrypointContractTest(unittest.TestCase):
         self.assertIn('ln -s "$ASSETS_DIR" "$GAME_DIR"', entrypoint)
 
     def test_entrypoint_configures_wine_for_headless_audio_and_unique_serials(self):
-        entrypoint = read("container/entrypoint.sh")
+        entrypoint = read("archive/container/entrypoint.sh")
 
         self.assertIn("Software\\\\Wine\\\\Drivers", entrypoint)
         self.assertIn("/d alsa", entrypoint)
@@ -765,14 +765,14 @@ class EntrypointContractTest(unittest.TestCase):
         self.assertIn("/d \"$PLAYER_SERIAL\"", entrypoint)
 
     def test_entrypoint_stores_vnc_password_in_auth_file_not_process_arguments(self):
-        entrypoint = read("container/entrypoint.sh")
-        supervisor = read("container/supervisord.conf")
+        entrypoint = read("archive/container/entrypoint.sh")
+        supervisor = read("archive/container/supervisord.conf")
 
         self.assertIn("Applying noVNC audio/video sync tuning", entrypoint)
         self.assertIn("/bin/bash /opt/ra2/patch-novnc.sh /opt/novnc", entrypoint)
         self.assertIn("remote.html", entrypoint)
         self.assertIn("x11vnc -storepasswd \"$VNC_PASSWORD\" /tmp/x11vnc.pass", entrypoint)
-        x11vnc = read("container/start-x11vnc.sh")
+        x11vnc = read("archive/container/start-x11vnc.sh")
         self.assertIn("-rfbauth /tmp/x11vnc.pass", x11vnc)
         self.assertIn("/bin/sh /opt/ra2/start-x11vnc.sh", supervisor)
         self.assertNotIn("-passwd %(ENV_VNC_PASSWORD)s", supervisor)
@@ -780,7 +780,7 @@ class EntrypointContractTest(unittest.TestCase):
 
 class DisplayPipelineContractTest(unittest.TestCase):
     def test_supervisor_starts_the_browser_display_pipeline_and_game(self):
-        supervisor = read("container/supervisord.conf")
+        supervisor = read("archive/container/supervisord.conf")
 
         for program in [
             "[program:pulseaudio]",
@@ -801,7 +801,7 @@ class DisplayPipelineContractTest(unittest.TestCase):
         self.assertIn("autorestart=unexpected", supervisor)
         self.assertIn("exitcodes=0", supervisor)
         self.assertIn("Xvfb :1 -screen 0 %(ENV_RESOLUTION)sx16", supervisor)
-        websockify = read("container/start-websockify.sh")
+        websockify = read("archive/container/start-websockify.sh")
         self.assertIn('RUNNER="/opt/novnc/utils/websockify/run"', websockify)
         self.assertIn('/bin/sh "$RUNNER"', websockify)
         self.assertIn('--web="$WEB_ROOT"', websockify)
@@ -962,7 +962,7 @@ class AutomationScriptsContractTest(unittest.TestCase):
             "scripts/validate-env.sh",
             "scripts/verify-ready.sh",
             "scripts/check-av-sync.sh",
-            "scripts/check-webrtc-ready.sh",
+            "scripts/archive/check-webrtc-ready.sh",
             "scripts/apply-serial-fix.sh",
             "archive/compose/compose.webrtc.yaml",
             "docs/READY.md",

@@ -11,7 +11,7 @@ BUILD_ON_NAS="${RA2_WEBRTC_BUILD:-0}"
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
 
 echo "[redeploy-webrtc-udp] syncing project to ${HOST}:${TARGET}"
-NAS_HOST="$HOST" NAS_TARGET="$TARGET" sh "$SCRIPT_DIR/sync-to-nas.sh"
+NAS_HOST="$HOST" NAS_TARGET="$TARGET" sh "$SCRIPT_DIR/../sync-to-nas.sh"
 
 if [ "$BUILD_ON_NAS" = "1" ]; then
   compose_action="up -d --build --force-recreate"

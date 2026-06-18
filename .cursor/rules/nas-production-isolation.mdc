@@ -1,0 +1,32 @@
+---
+description: Never modify running production NAS Docker containers or deploy without explicit human approval.
+alwaysApply: true
+---
+
+# NAS Production Isolation
+
+The live **MediaServer2** DSM Docker stack is the **old stable system** — perfectly working. Do not touch it from this refactor repo.
+
+## Host access (read-only by default)
+
+- SSH DDNS alias: `MediaServer2` → `peterjfrancoiii2.synology.me`
+- SSH LAN alias: `MediaServer2Local` → `192.168.0.193`
+- DSM endpoint: `peterjfrancoiii2.synology.me:5001`
+
+## Forbidden without explicit human approval
+
+- `docker stop`, `restart`, `rm`, `compose up`, `build`, or `recreate` on **any** running NAS container
+- `scripts/redeploy-ultra.sh`, `scripts/sync-to-nas.sh`, or any script that mutates production NAS state
+- Changes to live `Cloud_Gaming_Player1`, `Cloud_Gaming_Player2`, `RA2_Coturn`, or other DSM containers
+- Writes to frozen `Red_Alert2_NAS:Arch` or GitHub `NAS_Web_Game_Container`
+
+## Allowed
+
+- Edit code, compose, tests, and docs **in this repo**
+- **Ultra stack redeploy** to MediaServer2: `NAS_HOST=MediaServer2 sh scripts/redeploy-ultra.sh`
+- Read-only SSH on non-RA2 containers: `docker ps`, `docker logs`
+- Local tests: `sh scripts/run-webrtc-tests.sh`, `pytest`
+
+## Reference
+
+`docs/INFRASTRUCTURE_BOUNDARY.md`

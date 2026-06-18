@@ -167,7 +167,7 @@ section "Recommendations"
 printf '%s\n' \
   "- Primary play path: Moonlight client + Sunshine/Wolf (see docs/MOONLIGHT_EXPERIMENT.md)." \
   "- Admin/recovery: noVNC on ports 6081/6082 (vnc.html)." \
-  "- WebRTC remote.html is legacy fallback only — run scripts/check-webrtc-ice-reachability.sh if video is blank." \
+  "- WebRTC remote.html is legacy fallback only — run scripts/archive/check-webrtc-ice-reachability.sh if video is blank." \
   "- Production RAM baseline: 6 GB (stock 1.7 GB is testing/fallback only)." \
   "- Prefer wired 2.5GbE or 1GbE when measuring latency." \
   "- Use wired Ethernet on client and NAS when measuring latency." \

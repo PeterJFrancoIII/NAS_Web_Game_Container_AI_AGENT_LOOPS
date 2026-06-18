@@ -4,7 +4,7 @@ x-ra2-common: &ra2-common
   image: ra2-lan-party:latest
   build:
     context: .
-    dockerfile: container/Dockerfile
+    dockerfile: archive/container/Dockerfile
   restart: "${RA2_RESTART_POLICY:-no}"
   init: true
   stop_grace_period: 15s
@@ -54,19 +54,19 @@ services:
     volumes:
       - ${PREFIX1_DIR:-/volume2/Data/App_Development/ra2-lan-party/prefixes/player1-win32}:/home/commander/.wine:rw
       - ${ASSETS_DIR:-/volume2/Data/App_Development/ra2-lan-party/assets}:/home/commander/game_assets:ro
-      - ./container/entrypoint.sh:/opt/ra2/entrypoint.sh:ro
-      - ./container/patch-novnc.sh:/opt/ra2/patch-novnc.sh:ro
-      - ./container/supervisord.conf:/opt/ra2/supervisord.conf:ro
+      - ./archive/container/entrypoint.sh:/opt/ra2/entrypoint.sh:ro
+      - ./archive/container/patch-novnc.sh:/opt/ra2/patch-novnc.sh:ro
+      - ./archive/container/supervisord.conf:/opt/ra2/supervisord.conf:ro
       - ./container/start-pulseaudio.sh:/opt/ra2/start-pulseaudio.sh:ro
-      - ./container/start-websockify.sh:/opt/ra2/start-websockify.sh:ro
-      - ./container/start-x11vnc.sh:/opt/ra2/start-x11vnc.sh:ro
-      - ./container/healthcheck-novnc.sh:/opt/ra2/healthcheck-novnc.sh:ro
-      - ./container/audio-proxy.sh:/opt/ra2/audio-proxy.sh:ro
-      - ./container/latency-proxy.sh:/opt/ra2/latency-proxy.sh:ro
-      - ./container/latency-overlay.js:/opt/ra2/latency-overlay.js:ro
-      - ./container/cursor-lock.js:/opt/ra2/cursor-lock.js:ro
+      - ./archive/container/start-websockify.sh:/opt/ra2/start-websockify.sh:ro
+      - ./archive/container/start-x11vnc.sh:/opt/ra2/start-x11vnc.sh:ro
+      - ./archive/container/healthcheck-novnc.sh:/opt/ra2/healthcheck-novnc.sh:ro
+      - ./archive/container/audio-proxy.sh:/opt/ra2/audio-proxy.sh:ro
+      - ./archive/container/latency-proxy.sh:/opt/ra2/latency-proxy.sh:ro
+      - ./archive/container/latency-overlay.js:/opt/ra2/latency-overlay.js:ro
+      - ./archive/container/cursor-lock.js:/opt/ra2/cursor-lock.js:ro
       - ./container/pulse:/opt/ra2/pulse:ro
-      - ./container/websockify-tokens.cfg:/opt/ra2/websockify-tokens.cfg:ro
+      - ./archive/container/websockify-tokens.cfg:/opt/ra2/websockify-tokens.cfg:ro
       - ./container/asound.conf:/etc/asound.conf:ro
 
   ra2-player-2:
@@ -81,19 +81,19 @@ services:
     volumes:
       - ${PREFIX2_DIR:-/volume2/Data/App_Development/ra2-lan-party/prefixes/player2-win32}:/home/commander/.wine:rw
       - ${ASSETS_DIR:-/volume2/Data/App_Development/ra2-lan-party/assets}:/home/commander/game_assets:ro
-      - ./container/entrypoint.sh:/opt/ra2/entrypoint.sh:ro
-      - ./container/patch-novnc.sh:/opt/ra2/patch-novnc.sh:ro
-      - ./container/supervisord.conf:/opt/ra2/supervisord.conf:ro
+      - ./archive/container/entrypoint.sh:/opt/ra2/entrypoint.sh:ro
+      - ./archive/container/patch-novnc.sh:/opt/ra2/patch-novnc.sh:ro
+      - ./archive/container/supervisord.conf:/opt/ra2/supervisord.conf:ro
       - ./container/start-pulseaudio.sh:/opt/ra2/start-pulseaudio.sh:ro
-      - ./container/start-websockify.sh:/opt/ra2/start-websockify.sh:ro
-      - ./container/start-x11vnc.sh:/opt/ra2/start-x11vnc.sh:ro
-      - ./container/healthcheck-novnc.sh:/opt/ra2/healthcheck-novnc.sh:ro
-      - ./container/audio-proxy.sh:/opt/ra2/audio-proxy.sh:ro
-      - ./container/latency-proxy.sh:/opt/ra2/latency-proxy.sh:ro
-      - ./container/latency-overlay.js:/opt/ra2/latency-overlay.js:ro
-      - ./container/cursor-lock.js:/opt/ra2/cursor-lock.js:ro
+      - ./archive/container/start-websockify.sh:/opt/ra2/start-websockify.sh:ro
+      - ./archive/container/start-x11vnc.sh:/opt/ra2/start-x11vnc.sh:ro
+      - ./archive/container/healthcheck-novnc.sh:/opt/ra2/healthcheck-novnc.sh:ro
+      - ./archive/container/audio-proxy.sh:/opt/ra2/audio-proxy.sh:ro
+      - ./archive/container/latency-proxy.sh:/opt/ra2/latency-proxy.sh:ro
+      - ./archive/container/latency-overlay.js:/opt/ra2/latency-overlay.js:ro
+      - ./archive/container/cursor-lock.js:/opt/ra2/cursor-lock.js:ro
       - ./container/pulse:/opt/ra2/pulse:ro
-      - ./container/websockify-tokens.cfg:/opt/ra2/websockify-tokens.cfg:ro
+      - ./archive/container/websockify-tokens.cfg:/opt/ra2/websockify-tokens.cfg:ro
       - ./container/asound.conf:/etc/asound.conf:ro
 
 networks:
