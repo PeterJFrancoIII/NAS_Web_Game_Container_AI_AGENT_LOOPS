@@ -57,7 +57,7 @@ if ! exec_in_container "ls -la /dev/dri && id"; then
   check_fail "/dev/dri is not mounted in $CONTAINER"
   printf '\nRecreate players with the transcode overlay:\n'
   printf '  RA2_COMPOSE_TRANSCODE=1 sh scripts/bootstrap-nas.sh launch\n'
-  printf '  or: docker compose --env-file .env -f compose.yaml -f compose.https.yaml -f compose.transcode.yaml up -d --force-recreate\n'
+  printf '  or: docker compose --env-file .env -f compose.yaml -f compose.https.yaml -f archive/compose/compose.transcode.yaml up -d --force-recreate\n'
   print_manual_commands
   exit 1
 fi

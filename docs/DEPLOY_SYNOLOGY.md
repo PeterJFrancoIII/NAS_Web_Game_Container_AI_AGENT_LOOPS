@@ -138,7 +138,7 @@ The DS225+ uses an Intel J4125 (Gemini Lake), which supports hardware H.264 and 
 Set `RENDER_GID`, `VIDEO_GID`, `DRI_DEVICE`, and `LIBVA_DRIVER_NAME` in `.env` if the defaults do not match your NAS. Enable this only after the base noVNC stack is stable, then start with the overlay:
 
 ```bash
-RA2_COMPOSE_TRANSCODE=1 docker compose --env-file .env -f compose.yaml -f compose.transcode.yaml up -d --build
+RA2_COMPOSE_TRANSCODE=1 docker compose --env-file .env -f compose.yaml -f archive/compose/compose.transcode.yaml up -d --build
 ```
 
 Verify VA-API visibility:
@@ -254,10 +254,10 @@ Deploy side-by-side experiments without stopping RA2 players:
 
 ```bash
 # Smallest experiment:
-docker compose --env-file .env -f compose.sunshine.yaml up -d
+docker compose --env-file .env -f archive/compose/compose.sunshine.yaml up -d
 
 # Preferred architecture (Wayland + inputtino):
-docker compose --env-file .env -f compose.wolf.yaml up -d
+docker compose --env-file .env -f archive/compose/compose.wolf.yaml up -d
 ```
 
 Pair the **Moonlight** client to the NAS LAN IP. For remote play, use Tailscale — see `docs/TAILSCALE.md`. Do **not** expose GameStream ports to the internet.

@@ -198,7 +198,7 @@ class ComposeTopologyContractTest(unittest.TestCase):
 
     def test_transcode_overlay_grants_gpu_access_without_changing_default_stack(self):
         compose = read("compose.yaml")
-        overlay = read("compose.transcode.yaml")
+        overlay = read("archive/compose/compose.transcode.yaml")
 
         self.assertNotIn("/dev/dri", compose)
         self.assertIn("${DRI_DEVICE:-/dev/dri}:/dev/dri", overlay)
@@ -217,7 +217,7 @@ class ComposeTopologyContractTest(unittest.TestCase):
 
     def test_webrtc_overlay_adds_udp_and_signaling_ports_without_changing_default_stack(self):
         compose = read("compose.yaml")
-        overlay = read("compose.webrtc.yaml")
+        overlay = read("archive/compose/compose.webrtc.yaml")
 
         self.assertNotIn("WEBRTC_ENABLED", compose)
         self.assertNotIn("compose.webrtc.yaml", compose)
@@ -249,7 +249,7 @@ class ComposeTopologyContractTest(unittest.TestCase):
                 "-f",
                 str(PROJECT_ROOT / "compose.yaml"),
                 "-f",
-                str(PROJECT_ROOT / "compose.webrtc.yaml"),
+                str(PROJECT_ROOT / "archive/compose/compose.webrtc.yaml"),
                 "config",
                 "--quiet",
             ],
@@ -455,7 +455,7 @@ class RuntimeImageContractTest(unittest.TestCase):
 
     def test_webrtc_latency_preset_and_stable_baseline(self):
         start = read("container/start-webrtc.sh")
-        compose = read("compose.webrtc.yaml")
+        compose = read("archive/compose/compose.webrtc.yaml")
         env_example = read(".env.example")
 
         self.assertIn("WEBRTC_LATENCY_PRESET", start)
@@ -552,7 +552,7 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("/opt/ra2/webrtc-media-helper", redeploy)
 
     def test_webrtc_udp_overlay_enables_udp_ice(self):
-        overlay = read("compose.webrtc-udp.yaml")
+        overlay = read("archive/compose/compose.webrtc-udp.yaml")
         lib = read("scripts/lib.sh")
 
         self.assertIn("WEBRTC_ICE_UDP: \"1\"", overlay)
@@ -561,7 +561,7 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("compose.webrtc-udp.yaml", lib)
 
     def test_selkies_experiment_compose_is_side_by_side(self):
-        compose = read("compose.selkies-experiment.yaml")
+        compose = read("archive/compose/compose.selkies-experiment.yaml")
         docs = read("docs/SELKIES_EXPERIMENT.md")
 
         self.assertIn("ra2-selkies-experiment", compose)
@@ -571,9 +571,9 @@ class RuntimeImageContractTest(unittest.TestCase):
         self.assertIn("does not affect", docs.lower())
 
     def test_moonlight_experiment_compose_files_are_side_by_side(self):
-        sunshine = read("compose.sunshine.yaml")
-        wolf = read("compose.wolf.yaml")
-        tailscale = read("compose.tailscale.yaml")
+        sunshine = read("archive/compose/compose.sunshine.yaml")
+        wolf = read("archive/compose/compose.wolf.yaml")
+        tailscale = read("archive/compose/compose.tailscale.yaml")
         docs = read("docs/MOONLIGHT_EXPERIMENT.md")
 
         self.assertIn("ra2-sunshine-experiment", sunshine)
@@ -964,7 +964,7 @@ class AutomationScriptsContractTest(unittest.TestCase):
             "scripts/check-av-sync.sh",
             "scripts/check-webrtc-ready.sh",
             "scripts/apply-serial-fix.sh",
-            "compose.webrtc.yaml",
+            "archive/compose/compose.webrtc.yaml",
             "docs/READY.md",
         ]:
             self.assertTrue((PROJECT_ROOT / script).is_file(), script)
@@ -1651,8 +1651,8 @@ class DocumentationContractTest(unittest.TestCase):
             "docs/MOONLIGHT_EXPERIMENT.md",
             "docs/CONSOLIDATED_ARCHITECTURE.md",
             "docs/TAILSCALE.md",
-            "compose.sunshine.yaml",
-            "compose.wolf.yaml",
+            "archive/compose/compose.sunshine.yaml",
+            "archive/compose/compose.wolf.yaml",
             "check-host-prerequisites.sh",
             "check-webrtc-ice-reachability.sh",
             "legacy browser fallback",

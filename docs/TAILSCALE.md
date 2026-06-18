@@ -18,7 +18,7 @@ TAILSCALE_HOSTNAME=ra2-nas
 
 ```bash
 mkdir -p data/tailscale/state
-docker compose --env-file .env -f compose.tailscale.yaml up -d
+docker compose --env-file .env -f archive/compose/compose.tailscale.yaml up -d
 ```
 
 Or via overlay flag:

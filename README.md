@@ -167,4 +167,4 @@ docker compose --env-file .env \
 
 Wine: **10.8 amd64 package + win32 prefix + multilib** — do not change without gameplay validation.
 
-**Archived legacy fallback** (not golden master): WebRTC, Moonlight (`docs/MOONLIGHT_EXPERIMENT.md`, `compose.sunshine.yaml`), Tailscale (`docs/TAILSCALE.md`). Optional transcode overlay: `RA2_COMPOSE_TRANSCODE=1`.
+**Archived legacy fallback** (not golden master): WebRTC, Moonlight (`docs/MOONLIGHT_EXPERIMENT.md`, `archive/compose/compose.sunshine.yaml`), Tailscale (`docs/TAILSCALE.md`). Optional transcode overlay: `RA2_COMPOSE_TRANSCODE=1`.

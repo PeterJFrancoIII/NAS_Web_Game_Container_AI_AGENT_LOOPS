@@ -13,7 +13,7 @@ Selkies runs a Wayland compositor with lower capture overhead than scraping X11 
 ```bash
 cd /volume2/Data/App_Development/ra2-lan-party/project
 mkdir -p data/selkies-experiment/config
-docker compose --env-file .env -f compose.selkies-experiment.yaml up -d
+docker compose --env-file .env -f archive/compose/compose.selkies-experiment.yaml up -d
 ```
 
 Open:
@@ -64,7 +64,7 @@ Otherwise keep Selkies documented as an experiment and retain `WEBRTC_LATENCY_PR
 ## Tear down
 
 ```bash
-docker compose -f compose.selkies-experiment.yaml down
+docker compose -f archive/compose/compose.selkies-experiment.yaml down
 ```
 
 This does not affect `ra2-player-1` or `ra2-player-2`.

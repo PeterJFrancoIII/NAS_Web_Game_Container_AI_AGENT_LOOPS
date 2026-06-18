@@ -8,12 +8,12 @@ The files below remain in the repository for reference and contract tests but ar
 
 | Profile | Compose / scripts | Docs |
 |---------|-------------------|------|
-| Legacy WebRTC `remote.html` | `compose.webrtc.yaml`, `compose.webrtc-host.yaml`, `compose.webrtc-udp.yaml`, `compose.webrtc-uinput.yaml` | §WebRTC in `docs/DEPLOY_SYNOLOGY.md` |
-| Moonlight + Wolf/Sunshine | `compose.wolf.yaml`, `compose.sunshine.yaml`, `compose.moonlight-uinput.yaml` | `docs/MOONLIGHT_EXPERIMENT.md` |
-| Selkies / Webtop | `compose.selkies-experiment.yaml` | `docs/SELKIES_EXPERIMENT.md` |
-| Tailscale WAN Moonlight | `compose.tailscale.yaml` | `docs/TAILSCALE.md` |
+| Legacy WebRTC `remote.html` | `archive/compose/compose.webrtc.yaml`, `compose.webrtc-host.yaml`, `compose.webrtc-udp.yaml`, `compose.webrtc-uinput.yaml` | §WebRTC in `docs/DEPLOY_SYNOLOGY.md` |
+| Moonlight + Wolf/Sunshine | `archive/compose/compose.wolf.yaml`, `compose.sunshine.yaml`, `compose.moonlight-uinput.yaml` | `docs/MOONLIGHT_EXPERIMENT.md` |
+| Selkies / Webtop | `archive/compose/compose.selkies-experiment.yaml` | `docs/SELKIES_EXPERIMENT.md` |
+| Tailscale WAN Moonlight | `archive/compose/compose.tailscale.yaml` | `docs/TAILSCALE.md` |
 | noVNC-only base image | `container/Dockerfile`, `container/supervisord.conf`, `compose.yaml` without ultra overlay | `docs/HTTPS.md` (vnc.html paths) |
-| VA-API transcode overlay | `compose.transcode.yaml` | `docs/DEPLOY_SYNOLOGY.md` |
+| VA-API transcode overlay | `archive/compose/compose.transcode.yaml` | `docs/DEPLOY_SYNOLOGY.md` |
 | RAM debug player | `compose.ultra.yaml` profile `ra2-player-dev`, `scripts/dev-ram-ultra.sh` | `scripts/dev-ram-ultra.sh` header |
 
 ## Archived container modules (ultra image does not use these at runtime)

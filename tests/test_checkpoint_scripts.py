@@ -160,7 +160,8 @@ class TlsCheckpointUnitTest(unittest.TestCase):
             env_file.write_text(f"TLS_DIR={tls_dir}\n", encoding="utf-8")
             (root / "compose.yaml").write_text("services: {}\n", encoding="utf-8")
             (root / "compose.https.yaml").write_text("services: {}\n", encoding="utf-8")
-            (root / "compose.transcode.yaml").write_text("services: {}\n", encoding="utf-8")
+            (root / "archive/compose").mkdir(parents=True)
+            (root / "archive/compose/compose.transcode.yaml").write_text("services: {}\n", encoding="utf-8")
 
             fake_docker = root / "docker"
             docker_log = root / "docker.args"
@@ -201,7 +202,8 @@ class TlsCheckpointUnitTest(unittest.TestCase):
             env_file = root / ".env"
             env_file.write_text("", encoding="utf-8")
             (root / "compose.yaml").write_text("services: {}\n", encoding="utf-8")
-            (root / "compose.webrtc.yaml").write_text("services: {}\n", encoding="utf-8")
+            (root / "archive/compose").mkdir(parents=True)
+            (root / "archive/compose/compose.webrtc.yaml").write_text("services: {}\n", encoding="utf-8")
 
             fake_docker = root / "docker"
             docker_log = root / "docker.args"

@@ -11,13 +11,13 @@ This project implements the consolidated research at:
 | Profile | Stack | Status | Compose / script |
 |---------|-------|--------|------------------|
 | **0 — Browser (production)** | Ultra Arch + WSS/WebCodecs | **Golden master** | `compose.ultra.yaml`, `scripts/redeploy-ultra.sh` |
-| 1 — Native Moonlight | Wolf + Moonlight | Archived | `compose.wolf.yaml`, `docs/ARCHIVED_EXPERIMENTS.md` |
-| 1b — Sunshine | Sunshine + Moonlight | Archived | `compose.sunshine.yaml` |
+| 1 — Native Moonlight | Wolf + Moonlight | Archived | `archive/compose/compose.wolf.yaml`, `docs/ARCHIVED_EXPERIMENTS.md` |
+| 1b — Sunshine | Sunshine + Moonlight | Archived | `archive/compose/compose.sunshine.yaml` |
 | RA2 game core | Wine + Xvfb | Production (inside ultra) | `compose.yaml` |
 | Admin noVNC | noVNC + websockify | Archived | base `compose.yaml` without ultra |
-| Legacy WebRTC | `remote.html` | Archived | `compose.webrtc.yaml` |
-| Selkies/Webtop | Full desktop | Rejected | `compose.selkies-experiment.yaml` |
-| WAN Tailscale | Remote Moonlight | Archived | `compose.tailscale.yaml` |
+| Legacy WebRTC | `remote.html` | Archived | `archive/compose/compose.webrtc.yaml` |
+| Selkies/Webtop | Full desktop | Rejected | `archive/compose/compose.selkies-experiment.yaml` |
+| WAN Tailscale | Remote Moonlight | Archived | `archive/compose/compose.tailscale.yaml` |
 
 ## Production deployment order
 

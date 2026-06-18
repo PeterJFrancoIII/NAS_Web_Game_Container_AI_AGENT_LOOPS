@@ -29,7 +29,7 @@ Hard requirements:
 ```bash
 cd /volume2/Data/App_Development/ra2-lan-party/project
 mkdir -p data/sunshine-experiment/config
-docker compose --env-file .env -f compose.sunshine.yaml up -d
+docker compose --env-file .env -f archive/compose/compose.sunshine.yaml up -d
 ```
 
 Sunshine uses **host networking** and GameStream ports:
@@ -47,7 +47,7 @@ Wolf (Games on Whales) spins up Wayland child containers on demand with `inputti
 
 ```bash
 mkdir -p data/wolf-experiment/config
-docker compose --env-file .env -f compose.wolf.yaml up -d
+docker compose --env-file .env -f archive/compose/compose.wolf.yaml up -d
 ```
 
 Wolf requires:
@@ -115,8 +115,8 @@ Until then, use noVNC for admin/recovery and WebRTC only as an optional legacy p
 ## Rollback
 
 ```bash
-docker compose --env-file .env -f compose.sunshine.yaml down
-docker compose --env-file .env -f compose.wolf.yaml down
+docker compose --env-file .env -f archive/compose/compose.sunshine.yaml down
+docker compose --env-file .env -f archive/compose/compose.wolf.yaml down
 ```
 
 RA2 players are unaffected.

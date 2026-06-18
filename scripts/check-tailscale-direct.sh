@@ -17,7 +17,7 @@ state="$(container_status ra2-tailscale)"
 if [ "$state" = "running" ]; then
   ok "ra2-tailscale is running"
 else
-  warn "ra2-tailscale state=${state:-not found} — start compose.tailscale.yaml with TAILSCALE_AUTHKEY"
+  warn "ra2-tailscale state=${state:-not found} — start archive/compose/compose.tailscale.yaml with TAILSCALE_AUTHKEY"
 fi
 
 section "Local tailscale status"

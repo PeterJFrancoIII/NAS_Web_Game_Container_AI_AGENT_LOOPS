@@ -16,7 +16,7 @@ for svc in ra2-sunshine-experiment ra2-wolf-experiment; do
   if [ "$state" = "running" ]; then
     pass "${svc} is running"
   else
-    note "${svc} state=${state:-not found} (optional — start with compose.sunshine.yaml or compose.wolf.yaml)"
+    note "${svc} state=${state:-not found} (optional — start with archive/compose/compose.sunshine.yaml or compose.wolf.yaml)"
   fi
 done
 

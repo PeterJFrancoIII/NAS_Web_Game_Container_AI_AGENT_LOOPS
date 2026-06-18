@@ -36,7 +36,7 @@ if [ "$(container_status "$SELKIES_CONTAINER")" = "running" ]; then
   run_docker stats --no-stream "$SELKIES_CONTAINER" 2>/dev/null || true
 else
   echo "Selkies experiment not running."
-  echo "Start with: docker compose --env-file .env -f compose.selkies-experiment.yaml up -d"
+  echo "Start with: docker compose --env-file .env -f archive/compose/compose.selkies-experiment.yaml up -d"
 fi
 
 section "Comparison checklist"

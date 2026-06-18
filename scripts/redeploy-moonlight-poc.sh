@@ -19,15 +19,15 @@ RA2_PREREQ_WARN_ONLY=1 sh "$SCRIPT_DIR/prepare-streaming-session.sh" || true
 compose_args="-f compose.yaml"
 case "$MODE" in
   sunshine)
-    compose_args="-f compose.sunshine.yaml"
+    compose_args="-f $(archived_compose_file compose.sunshine.yaml)"
     service="ra2-sunshine-experiment"
   ;;
   wolf)
-    compose_args="-f compose.wolf.yaml"
+    compose_args="-f $(archived_compose_file compose.wolf.yaml)"
     service="ra2-wolf-experiment"
   ;;
   both)
-    compose_args="-f compose.sunshine.yaml -f compose.wolf.yaml"
+    compose_args="-f $(archived_compose_file compose.sunshine.yaml) -f $(archived_compose_file compose.wolf.yaml)"
     service="ra2-wolf-experiment ra2-sunshine-experiment"
   ;;
   *)
@@ -36,8 +36,8 @@ case "$MODE" in
   ;;
 esac
 
-if [ "${RA2_COMPOSE_MOONLIGHT_UINPUT:-0}" = "1" ] && [ -f compose.moonlight-uinput.yaml ]; then
-  compose_args="$compose_args -f compose.moonlight-uinput.yaml"
+if [ "${RA2_COMPOSE_MOONLIGHT_UINPUT:-0}" = "1" ] && [ -f "$(archived_compose_file compose.moonlight-uinput.yaml)" ]; then
+  compose_args="$compose_args -f $(archived_compose_file compose.moonlight-uinput.yaml)"
 fi
 
 printf '\n== Starting Moonlight experiment(s): %s ==\n' "$MODE"
