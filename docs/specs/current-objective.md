@@ -1,12 +1,12 @@
 mission_control_packet:
-  project_name: "Zero-Drift Build OS"
+  project_name: "Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS"
   user_objective: >
     Implement the AI System Architect Bootloader as an isolated, reusable
     repository context pack with bootstrap tooling — fully separated from the
     stable Red Alert 2 NAS system.
   current_objective: >
     Install v2.0 context pack, verification scripts, and GitHub CI on branch
-    feature/zero-drift-bootloader-os.
+    feature/ai-agent-loops.
   success_criteria:
     - Context pack files exist and pass verify-context-pack.sh
     - bootstrap-project.sh can scaffold a clean target directory
@@ -116,5 +116,5 @@ mission_control_packet:
       forbidden_files:
         - "NAS_Web_Game_Container remote"
       done_when:
-        - feature/zero-drift-bootloader-os pushed
+        - feature/ai-agent-loops pushed to NAS_Web_Game_Container_AI_AGENT_LOOPS
         - main branch exists on GitHub

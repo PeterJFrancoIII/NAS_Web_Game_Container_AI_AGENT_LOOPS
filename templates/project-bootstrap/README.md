@@ -1,6 +1,6 @@
 # {{PROJECT_NAME}}
 
-Bootstrapped with [Zero-Drift Build OS](https://github.com/PeterJFrancoIII/Zero-Drift_Build_OS).
+Bootstrapped with [NAS_Web_Game_Container_AI_AGENT_LOOPS](https://github.com/PeterJFrancoIII/NAS_Web_Game_Container_AI_AGENT_LOOPS).
 
 ## Start here
 

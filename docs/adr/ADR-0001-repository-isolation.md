@@ -6,14 +6,14 @@ Decision owner: human + AI System Architect
 
 ## Context
 
-The Red Alert 2 NAS WebRTC streaming stack (`Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container`) reached golden-master stability. The user wants to implement the Zero-Drift Build OS bootloader without risking that system.
+The Red Alert 2 NAS WebRTC streaming stack (`Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container`) reached golden-master stability. The user wants to implement the AI System Architect Bootloader with agent loops without risking that system.
 
 ## Decision
 
-1. Create a new top-level directory: `Zero-Drift_Build_OS`
-2. Initialize a separate git repository with its own GitHub remote
-3. Use branch `feature/zero-drift-bootloader-os` for active implementation
-4. Never import or modify NAS production code from this repo
+1. Create a new top-level directory: `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS`
+2. Initialize a separate git repository: `NAS_Web_Game_Container_AI_AGENT_LOOPS`
+3. Use branch `feature/ai-agent-loops` for active implementation
+4. Never import or modify NAS production code from the frozen golden master
 
 ## Alternatives considered
 
@@ -24,10 +24,10 @@ The Red Alert 2 NAS WebRTC streaming stack (`Red_Alert2_NAS:Arch` / `NAS_Web_Gam
 ## Consequences
 
 - Clean agent governance experimentation
-- Duplicate README/setup overhead (acceptable)
-- NAS backup remains immutable reference at `main` on `NAS_Web_Game_Container`
+- Two repos to maintain: frozen NAS + active AI agent loops
+- Naming clearly signals relationship and separation
 
 ## Verification
 
-- `git remote -v` in Zero-Drift_Build_OS does not point to NAS_Web_Game_Container
+- `git remote -v` points to `NAS_Web_Game_Container_AI_AGENT_LOOPS`, not `NAS_Web_Game_Container`
 - `AGENTS.md` separation rule documented

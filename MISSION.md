@@ -2,26 +2,27 @@
 
 ## User objective
 
-Implement and maintain the **Zero-Drift Build OS** — a portable bootloader and repository context pack that lets AI System Architects start new projects with mission alignment, drift prevention, verification gates, and durable file-based memory.
+Implement and maintain **Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS** — the AI agent loops variant of the NAS Web Game Container project, with a portable bootloader and repository context pack for mission-aligned, zero-drift development.
 
 ## Current objective
 
-Install the v2.0 context pack (Section 11 of the bootloader spec), bootstrap tooling, and verification CI in this isolated repository on branch `feature/zero-drift-bootloader-os`.
+Operate the v2.0 context pack (Section 11 of the bootloader spec), bootstrap tooling, and verification CI on branch `feature/ai-agent-loops`.
 
 ## Success criteria
 
 - [x] New directory fully separated from `Red_Alert2_NAS:Arch` stable system
+- [x] Directory named `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS`
+- [x] GitHub repo `NAS_Web_Game_Container_AI_AGENT_LOOPS` created and pushed
 - [x] Mission Control Packet at `docs/specs/current-objective.md`
 - [x] Cursor rules, Claude agents, and verify-change skill installed
 - [x] `bootstrap-project.sh` copies context pack into new projects
 - [x] `verify-context-pack.sh` validates required artifacts
-- [ ] GitHub repo created and pushed on dedicated branch
-- [ ] First handoff written after bootstrap verification passes
+- [x] First handoff written after bootstrap verification passes
 
 ## Non-goals
 
-- Modifying or importing code from `NAS_Web_Game_Container` / `synology-ra2-arch`
-- Running production NAS deployments from this repo
+- Modifying or importing production code from the frozen `NAS_Web_Game_Container` golden master
+- Running production NAS deployments from this repo without explicit approval
 - Building application features unrelated to agent governance
 - Installing untrusted MCP servers or skills without review
 
@@ -30,7 +31,7 @@ Install the v2.0 context pack (Section 11 of the bootloader spec), bootstrap too
 - Stack: Markdown, shell scripts, GitHub Actions, Cursor/Claude config files
 - Deployment: Local bootstrap into target project directories
 - Security/privacy: Least-privilege tool policy; red-zone approval for auth/secrets/prod
-- Timeline: Initial install complete in this session
+- Full separation from `Red_Alert2_NAS:Arch` at all times
 
 ## Source of truth
 

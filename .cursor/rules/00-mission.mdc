@@ -11,4 +11,4 @@ alwaysApply: true
 - Prefer the smallest coherent slice.
 - If a change requires new architecture, create or update an ADR before implementation.
 - Do not touch auth, payments, permissions, secrets, production infrastructure, customer data, or migrations without explicit approval.
-- Never modify Red_Alert2_NAS:Arch or NAS_Web_Game_Container from this repo.
+- Never modify the frozen NAS project (`Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container`) from this repo.

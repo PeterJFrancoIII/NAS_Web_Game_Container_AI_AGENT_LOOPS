@@ -4,9 +4,9 @@ Chronological record of significant AI/human architecture and governance decisio
 
 ---
 
-## 2026-06-18 — Isolate Zero-Drift Build OS from NAS stable system
+## 2026-06-18 — Isolate AI agent loops repo from NAS stable system
 
-**Decision:** Create `Zero-Drift_Build_OS` as a new directory and new GitHub repository. Do not branch from or modify `NAS_Web_Game_Container`.
+**Decision:** Create `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` as a new directory and `NAS_Web_Game_Container_AI_AGENT_LOOPS` as a new GitHub repository. Do not branch from or modify `NAS_Web_Game_Container`.
 
 **Rationale:** The RA2 NAS golden master achieved stability. Agent governance work must not risk production streaming code.
 
@@ -15,10 +15,20 @@ Chronological record of significant AI/human architecture and governance decisio
 - Git worktree inside NAS repo — rejected (shared history)
 
 **Consequences:**
-- Future projects bootstrap from this OS
-- Two repos to maintain: frozen NAS + active governance OS
+- Future governed NAS development uses the AI agent loops repo
+- Two repos: frozen NAS + active AI agent loops
 
-**Verification:** No files under `Red_Alert2_NAS:Arch` modified in this session.
+**Verification:** No files under `Red_Alert2_NAS:Arch` modified.
+
+---
+
+## 2026-06-18 — Rename from Zero-Drift_Build_OS to NAS AI agent loops naming
+
+**Decision:** Rename local directory to `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` and GitHub repo to `NAS_Web_Game_Container_AI_AGENT_LOOPS`.
+
+**Rationale:** User requested naming that reflects the NAS project lineage while preserving full separation from the stable system.
+
+**Verification:** `git remote -v` shows `NAS_Web_Game_Container_AI_AGENT_LOOPS`.
 
 ---
 

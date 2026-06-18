@@ -1,17 +1,20 @@
-# Zero-Drift Build OS
+# Red Alert 2 NAS — AI Agent Loops
 
-Portable AI System Architect bootloader and repository context pack for governed, mission-aligned development.
+AI System Architect bootloader and governed context pack for the NAS Web Game Container project line.
+
+**Local directory:** `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS`  
+**GitHub:** [NAS_Web_Game_Container_AI_AGENT_LOOPS](https://github.com/PeterJFrancoIII/NAS_Web_Game_Container_AI_AGENT_LOOPS)
 
 **Source spec:** [`docs/reference/AI_System_Architect_Bootloader_Zero-Drift_Build_5.18.26.md`](docs/reference/AI_System_Architect_Bootloader_Zero-Drift_Build_5.18.26.md)
 
 ## What this is
 
-This repository is **not** the Red Alert 2 NAS streaming stack. It is a separate system that installs durable agent memory, drift prevention, and verification gates into any new software project.
+This repository is the **AI agent loops** variant of the NAS project — fully separated from the stable golden master. It installs durable agent memory, drift prevention, and verification gates for governed development.
 
 | Stable sibling (frozen) | This repo (active) |
 |---|---|
-| `Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container` | `Zero-Drift_Build_OS` |
-| Production golden master | Agent governance OS |
+| `Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container` | `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` / `NAS_Web_Game_Container_AI_AGENT_LOOPS` |
+| Production golden master | AI agent loops + governance OS |
 
 ## Quick start
 
@@ -60,8 +63,8 @@ templates/                 # Files copied into new projects
 
 | Branch | Purpose |
 |---|---|
-| `main` | Stable bootloader OS release |
-| `feature/zero-drift-bootloader-os` | Active implementation of v2.0 context pack |
+| `main` | Stable AI agent loops release |
+| `feature/ai-agent-loops` | Active implementation of v2.0 context pack |
 
 ## License
 

@@ -1,4 +1,4 @@
-# System Map — Zero-Drift Build OS
+# System Map — Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS
 
 Date: 2026-06-18  
 Status: accepted
@@ -54,17 +54,17 @@ Status: accepted
 ## Isolation boundary
 
 ```text
-  Red_Alert2_NAS:Arch (FROZEN)          Zero-Drift_Build_OS (ACTIVE)
-  ─────────────────────────            ─────────────────────────────
-  NAS_Web_Game_Container               New GitHub repo
-  Production RA2/AoE2/SC streaming     Agent governance OS
-  No agent governance changes          Bootstraps future projects
+  Red_Alert2_NAS:Arch (FROZEN)                    Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS (ACTIVE)
+  ─────────────────────────                      ─────────────────────────────────────────────
+  NAS_Web_Game_Container                         NAS_Web_Game_Container_AI_AGENT_LOOPS
+  Production RA2/AoE2/SC streaming               AI agent loops + governance OS
+  No agent governance changes                    Bootstraps governed NAS development
 ```
 
 ## Data flow — bootstrap new project
 
 ```text
-Zero-Drift_Build_OS/templates/project-bootstrap/*
+Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS/templates/project-bootstrap/*
         │
         │  bootstrap-project.sh <target> "<name>"
         ▼

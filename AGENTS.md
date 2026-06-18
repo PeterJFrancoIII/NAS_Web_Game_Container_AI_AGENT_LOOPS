@@ -33,7 +33,7 @@ Red changes require explicit human approval before edits and before merge.
 
 ## Separation rule
 
-This repository must never modify `Red_Alert2_NAS:Arch` or `NAS_Web_Game_Container`. Stable NAS work lives in the frozen backup; all new governed development uses this OS or projects bootstrapped from it.
+This repository (`Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` / `NAS_Web_Game_Container_AI_AGENT_LOOPS`) must never modify the frozen stable system (`Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container`). All new governed development uses this AI agent loops repo or projects bootstrapped from it.
 
 ## Communication
 
