@@ -73,3 +73,13 @@ Chronological record of significant AI/human architecture and governance decisio
 **Verification:** `verify-context-pack.sh` passes; stable repo not modified.
 
 ---
+
+## 2026-06-18 — Slice 3: MCP allowlist and NAS area rules
+
+**Decision:** Add `docs/specs/mcp-allowlist.md`, NAS area rules (`nas-infrastructure`, `nas-game-stability`), and `nas-deploy-ultra` / `nas-storage-boundary` skills. P0 MCP enablement deferred to human Cursor settings approval.
+
+**Rationale:** Wire read-only tool boundary; promote stable invariants into scoped rules without always-load bloat.
+
+**Verification:** `verify-context-pack.sh` passes; stable repo not modified.
+
+---

@@ -33,6 +33,10 @@ Use skills for repeatable procedures. Do not paste long procedures into chat if 
 - `nas-golden-master-index` — NAS golden master one-page index
 - `nas-repo-isolation` — frozen vs active repo rules
 - `nas-webrtc-verify` — WebRTC test and deploy verification chain
+- `nas-deploy-ultra` — NAS redeploy procedure (red-zone)
+- `nas-storage-boundary` — NAS path and sync boundaries
+
+MCP allowlist: `docs/specs/mcp-allowlist.md` (enable P0 in Cursor after human review).
 
 Never perform red-zone changes without explicit approval.
 

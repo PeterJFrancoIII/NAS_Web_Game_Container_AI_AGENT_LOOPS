@@ -57,6 +57,10 @@ This repository (`Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` / `NAS_Web_Game_Containe
 | `nas-golden-master-index` | NAS architecture, ports, compose, deploy questions |
 | `nas-repo-isolation` | Cross-repo work, imports, GitHub access |
 | `nas-webrtc-verify` | WebRTC, ICE, coturn, ultra-play.js changes |
+| `nas-deploy-ultra` | NAS redeploy/sync tasks (red-zone) |
+| `nas-storage-boundary` | Path, mount, sync-to-nas changes |
+
+MCP policy: `docs/specs/mcp-allowlist.md` — **human must approve before enabling P0 MCPs in Cursor settings.**
 
 Full bootloader reference: `docs/reference/AI_System_Architect_Bootloader_Zero-Drift_Build_5.18.26.md` — **on demand only**.
 
