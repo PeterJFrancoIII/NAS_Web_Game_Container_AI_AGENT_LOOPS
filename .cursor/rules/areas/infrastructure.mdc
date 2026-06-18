@@ -1,0 +1,16 @@
+---
+description: Infrastructure and deployment governance.
+globs:
+  - "docker/**"
+  - "compose*.yaml"
+  - "compose*.yml"
+  - ".github/workflows/**"
+  - "infra/**"
+alwaysApply: false
+---
+
+# Infrastructure
+
+- Red-zone: production infrastructure changes require approval.
+- Require plan output, least privilege review, rollback plan, environment separation.
+- Never deploy from a branch that has not passed CI.

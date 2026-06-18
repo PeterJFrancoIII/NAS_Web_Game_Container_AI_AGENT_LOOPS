@@ -1,0 +1,14 @@
+---
+description: Database and migration governance.
+globs:
+  - "**/migrations/**"
+  - "**/*.sql"
+  - "**/schema/**"
+alwaysApply: false
+---
+
+# Database
+
+- Migrations: `YYYYMMDDHHMM_description.sql`
+- Red-zone: all migration and schema changes require human approval.
+- Require rollback plan and test DB validation before merge.

@@ -1,24 +1,45 @@
-# Mission — NAS Web Game Container Refactor
+# Mission
 
-## Objective
+## User objective
 
-Refactor **NAS_Web_Game_Container** (Red Alert 2 Synology Docker stack) — separate production ultra path from archived experiments at the filesystem level.
+Use the **AI System Architect Bootloader** to govern the **NAS Web Game Container** system rebuild — refactor, deploy, and troubleshoot the ultra streaming stack on MediaServer2 while keeping the frozen golden master read-only.
 
-## Current phase
+## Current objective
 
-**Phase 2–3 complete (2026-06-18):** Script and container module archive layout; `compose-stack.sh` debug helper; `run_compose` deduplicated via `compose_file_args()`.
+**Bootloader active + NAS refactor live.** Phases 1–4 complete (compose/script/container archive). Phase 5 (CI) and live troubleshooting under bootloader operating loop.
 
-## Repository layout
+## Success criteria
 
-| Path | Role |
-|------|------|
-| `compose.yaml`, `compose.ultra*.yaml` | **Production** ultra stack |
-| `container/Dockerfile.ultra`, `remote-ultra/` | **Production** runtime image |
-| `archive/compose/` | Archived compose overlays |
-| `archive/container/` | Archived noVNC/WebRTC image modules |
-| `scripts/redeploy-ultra.sh` | **Production** deploy |
-| `scripts/archive/` | Historical experiment scripts |
-| `scripts/compose-stack.sh` | Print effective `-f` stack |
+- [x] Bootloader context pack installed (`verify-context-pack.sh` passes)
+- [x] NAS container refactor phases 1–4 deployed to MediaServer2
+- [x] `131` deploy-gate tests pass
+- [ ] Phase 5: GitHub CI workflow
+- [ ] Handoff/memory updated after each agent slice
+
+## Non-goals
+
+- Modifying frozen `Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container`
+- Non-RA2 DSM containers on MediaServer2 (`qbittorrent`, `gluetun`, `kmia-arch-ingest`)
+- Rebuilding unrelated application features outside NAS streaming stack
+
+## Constraints
+
+- **Stack:** Docker ultra Arch, Wine, WebRTC UDP, coturn, Synology DS225+
+- **Deployment:** `NAS_HOST=MediaServer2 sh scripts/redeploy-ultra.sh` (red-zone — human approval for unplanned deploys)
+- **Security:** No secrets in git; TLS on NAS at `/volume2/Data/App_Development/ra2-lan-party/tls`
+- **Bootloader:** Edit agent artifacts in `context-pack/agent/`, then `sh scripts/sync-context-pack.sh`
+
+## Source of truth
+
+| Layer | Path |
+|-------|------|
+| Bootloader spec (on demand) | `docs/reference/AI_System_Architect_Bootloader_Zero-Drift_Build_5.18.26.md` |
+| Current slice spec | `docs/specs/current-objective.md` |
+| NAS refactor plan | `docs/specs/nas-container-refactor.md` |
+| Architecture map | `docs/architecture/system-map.md` |
+| Decision log | `docs/adr/`, `docs/ai/ai-decision-log.md` |
+| Agent index | `CONTEXT.md`, `AGENTS.md` |
+| Production reference | `docs/GOLDEN_MASTER.md`, frozen GitHub `NAS_Web_Game_Container` |
 
 ## Live endpoints
 
@@ -27,17 +48,6 @@ Refactor **NAS_Web_Game_Container** (Red Alert 2 Synology Docker stack) — sepa
 | P1 | https://peterjfrancoiii2.synology.me:6081/ |
 | P2 | https://peterjfrancoiii2.synology.me:6082/ |
 
-Redeploy after refactor: `NAS_HOST=MediaServer2 sh scripts/redeploy-ultra.sh`
+## Red-zone areas
 
-## Success criteria
-
-- [x] Phase 1: `archive/compose/` layout
-- [x] Phase 2: `scripts/archive/`, `compose-stack.sh`, `lib.sh` dedup
-- [x] Phase 3: `archive/container/` for legacy noVNC modules
-- [x] 131 tests pass (deploy gate)
-- [ ] Phase 5: CI workflow
-
-## Non-goals
-
-- Frozen `Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container` on GitHub
-- Non-RA2 DSM containers on MediaServer2 (`qbittorrent`, `gluetun`, etc.)
+Production NAS deploy, DSM Docker changes (non-RA2), TLS/coturn mutation, Wine prefix deletion, auth/secrets/migrations — **explicit human approval required**.

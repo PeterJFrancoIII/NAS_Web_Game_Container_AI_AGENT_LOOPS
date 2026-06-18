@@ -1,0 +1,18 @@
+---
+description: Testing and quality gates.
+globs:
+  - "container/**"
+  - "scripts/**"
+  - "tests/**"
+  - "compose*.yaml"
+alwaysApply: false
+---
+
+# Testing and quality
+
+- State the verification commands before editing.
+- Run the smallest relevant test first, then broader checks.
+- Do not claim success without command output or a clearly stated blocker.
+- For bug fixes, add a regression test when practical.
+- For refactors, prove behavior equivalence.
+- Pre-deploy gate: `sh scripts/run-deploy-tests.sh`.

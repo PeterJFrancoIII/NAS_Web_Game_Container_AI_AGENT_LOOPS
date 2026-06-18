@@ -1,0 +1,17 @@
+---
+description: Test file governance.
+globs:
+  - "tests/**"
+  - "**/*.test.ts"
+  - "**/*.test.js"
+  - "**/*.spec.ts"
+  - "**/*.spec.js"
+alwaysApply: false
+---
+
+# Tests
+
+- Mirror source file names: `billing.service.test.ts`
+- Integration tests: `feature.integration.test.ts`
+- Bug fixes: add regression test when practical.
+- Refactors: prove behavior equivalence.

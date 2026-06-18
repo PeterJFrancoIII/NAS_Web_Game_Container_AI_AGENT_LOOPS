@@ -1,0 +1,28 @@
+---
+description: Preserve RA2/AoE2/StarCraft game process CPU pinning and Wine stability invariants.
+globs:
+  - "container/run-game-session.sh"
+  - "container/prepare-*-session.sh"
+  - "container/start-game-ultra.sh"
+  - "container/switch-game-display.sh"
+  - "config/games.json"
+alwaysApply: false
+---
+
+# NAS Game Stability
+
+Golden master depends on pinning each live game process to exactly one assigned CPU.
+
+- Do not remove or bypass `RA2_GAME_CPUSET`, `taskset -c "$GAME_CPUSET"`, or the watchdog re-pin of `gamemd.exe`.
+- Player 1 → CPU `0`; player 2 → CPU `1`; future players → `PLAYER_ID - 1`.
+- Stream stack stays on `ULTRA_STREAM_CPUSET=2,3` — do not steal game cores for encoding.
+- If crashes recur, debug Wine/runtime/process state — do not block normal gameplay inputs as a workaround.
+- Keep `docs/GOLDEN_MASTER.md` current when stable runtime changes (in NAS dev worktree only).
+
+## Verify
+
+After game-session script changes, run game-related tests in dev worktree:
+
+```bash
+python3 -m pytest tests/test_aoe2_session.py tests/test_checkpoint_scripts.py -q
+```

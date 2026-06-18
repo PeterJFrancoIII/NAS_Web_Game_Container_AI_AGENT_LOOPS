@@ -1,0 +1,14 @@
+---
+description: Always apply mission alignment rules for this repository.
+alwaysApply: true
+---
+
+# Mission alignment
+
+- Read MISSION.md before planning major changes.
+- Restate the current objective before editing.
+- Respect non-goals.
+- Prefer the smallest coherent slice.
+- If a change requires new architecture, create or update an ADR before implementation.
+- Do not touch auth, payments, permissions, secrets, production infrastructure, customer data, or migrations without explicit approval.
+- Never modify the frozen NAS project (`Red_Alert2_NAS:Arch` / `NAS_Web_Game_Container`) from this repo.

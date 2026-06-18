@@ -43,7 +43,12 @@ class SynologyEnvironmentContractTest(unittest.TestCase):
         forbidden_parent = "/" + "Data" + "/" + "App_Development"
         allowed_root = forbidden_parent + "/ra2-lan-party"
         skipped_dirs = {".git", ".pytest_cache", ".test-tmp", "__pycache__"}
-        skipped_files = {Path(".cursor/rules/project-storage-boundary.mdc")}
+        skipped_files = {
+            Path(".cursor/rules/project-storage-boundary.mdc"),
+            Path("context-pack/agent/.cursor/rules/project-storage-boundary.mdc"),
+            Path(".claude/skills/nas-storage-boundary/SKILL.md"),
+            Path("context-pack/agent/.claude/skills/nas-storage-boundary/SKILL.md"),
+        }
         offenders = []
 
         for path in PROJECT_ROOT.rglob("*"):

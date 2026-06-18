@@ -1,0 +1,16 @@
+---
+description: Architecture boundaries and ADR requirements.
+globs:
+  - "docs/architecture/**"
+  - "docs/adr/**"
+  - "src/**"
+  - "app/**"
+alwaysApply: false
+---
+
+# Architecture boundaries
+
+- Component boundary changes require an ADR.
+- Data model, public API, auth behavior, deployment topology, persistence, event schema, external dependencies, and security model changes require an ADR.
+- Avoid broad refactors inside feature slices.
+- Prefer boring, standard patterns over novel abstractions.

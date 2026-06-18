@@ -1,0 +1,15 @@
+---
+description: Backend API and service governance.
+globs:
+  - "src/api/**"
+  - "src/services/**"
+  - "server/**"
+  - "**/*.service.ts"
+alwaysApply: false
+---
+
+# Backend
+
+- Services: `thing.service.ts`
+- Repositories: `thing.repository.ts`
+- API behavior changes: unit + integration tests, error paths, contract tests.
