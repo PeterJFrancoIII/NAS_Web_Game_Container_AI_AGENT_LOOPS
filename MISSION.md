@@ -6,14 +6,14 @@ Use the **AI System Architect Bootloader** to govern the **NAS Web Game Containe
 
 ## Current objective
 
-**Bootloader active + NAS refactor live.** Phases 1–4 complete (compose/script/container archive). Phase 5 (CI) and live troubleshooting under bootloader operating loop.
+**Bootloader active + NAS refactor live.** Phases 1–5 complete. Live troubleshooting under bootloader verify/handoff loop.
 
 ## Success criteria
 
 - [x] Bootloader context pack installed (`verify-context-pack.sh` passes)
 - [x] NAS container refactor phases 1–4 deployed to MediaServer2
 - [x] `131` deploy-gate tests pass
-- [ ] Phase 5: GitHub CI workflow
+- [x] Phase 5: GitHub CI workflow (`.github/workflows/ci.yml`)
 - [ ] Handoff/memory updated after each agent slice
 
 ## Non-goals

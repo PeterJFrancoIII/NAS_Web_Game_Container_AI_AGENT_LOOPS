@@ -5,12 +5,12 @@ mission_control_packet:
     Bootloader — refactor the ultra Docker stack, deploy to MediaServer2 for live
     troubleshooting, and preserve the frozen golden master.
   current_objective: >
-    Bootloader context pack active on this repo. NAS refactor phases 1–4 complete
-    and deployed (6b0d20f). Next slice: Phase 5 CI workflow and live issue triage
-    under bootloader verify/handoff loop.
+    Phase 5 CI complete. Bootloader + NAS refactor on feature/ai-agent-loops.
+    Next: live troubleshooting and fixes under verify/handoff loop.
   success_criteria:
     - sh scripts/verify-context-pack.sh passes
-    - sh scripts/run-deploy-tests.sh passes (131 tests)
+    - sh scripts/run-deploy-tests.sh passes
+    - GitHub Actions CI green on push
     - RA2 ultra stack healthy on MediaServer2 (6081/6082 HTTP 200)
     - Agent edits flow through context-pack/agent + sync-context-pack.sh
   non_goals:

@@ -54,10 +54,14 @@
 
 ---
 
-## Phase 5 — CI and deploy gate (planned)
+## Phase 5 — CI and deploy gate ✅
 
-- GitHub workflow: `run-webrtc-tests.sh` + pytest on push
-- Optional: `RA2_COMPOSE_ULTRA=1 sh scripts/compose-stack.sh` smoke in CI
+| Action | Detail |
+|--------|--------|
+| Workflow | `.github/workflows/ci.yml` on push/PR to `main` and `feature/**` |
+| Job 1 | `sh scripts/verify-context-pack.sh` |
+| Job 2 | `sh scripts/run-deploy-tests.sh` (Python 3.12 + Node 20 + `requirements-ci.txt`) |
+| Job 3 | `sh scripts/ci-compose-smoke.sh` — ultra stack `docker compose config` |
 
 ---
 

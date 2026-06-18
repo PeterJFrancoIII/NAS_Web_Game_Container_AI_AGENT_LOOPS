@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - 'feature/**'
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  context-pack:
+    name: Bootloader context pack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify context pack artifacts
+        run: sh scripts/verify-context-pack.sh
+
+  deploy-tests:
+    name: NAS deploy test gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Python test dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: Run deploy test gate
+        run: sh scripts/run-deploy-tests.sh
+
+  compose-smoke:
+    name: Ultra compose config smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare environment file
+        run: cp .env.example .env
+
+      - name: Validate merged compose stack
+        env:
+          RA2_COMPOSE_ULTRA: '1'
+          RA2_COMPOSE_ULTRA_UDP: '1'
+          RA2_COMPOSE_ULTRA_UDP_HOST: '1'
+        run: sh scripts/ci-compose-smoke.sh

@@ -1,0 +1,2 @@
+# CI-only Python deps for deploy test gate (WebRTC unit tests).
+websockets>=13.0,<16

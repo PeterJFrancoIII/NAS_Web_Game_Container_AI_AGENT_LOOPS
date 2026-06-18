@@ -25,6 +25,7 @@ Build the user's current objective with maximum verified progress and minimum dr
 ### NAS application
 
 - Deploy test gate: `sh scripts/run-deploy-tests.sh`
+- CI compose smoke: `sh scripts/ci-compose-smoke.sh`
 - WebRTC unit tests: `sh scripts/run-webrtc-tests.sh`
 - Full unit suite: `python3 -m pytest tests/`
 - Effective compose stack: `RA2_COMPOSE_ULTRA=1 RA2_COMPOSE_ULTRA_UDP=1 RA2_COMPOSE_ULTRA_UDP_HOST=1 sh scripts/compose-stack.sh`
