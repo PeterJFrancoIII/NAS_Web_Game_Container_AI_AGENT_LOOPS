@@ -1,0 +1,19 @@
+---
+description: Testing and quality gates.
+globs:
+  - "src/**"
+  - "app/**"
+  - "tests/**"
+  - "packages/**"
+  - "scripts/**"
+alwaysApply: false
+---
+
+# Testing and quality
+
+- State the verification commands before editing.
+- Run the smallest relevant test first, then broader checks.
+- Do not claim success without command output or a clearly stated blocker.
+- For bug fixes, add a regression test when practical.
+- For refactors, prove behavior equivalence.
+- Run `sh scripts/verify-context-pack.sh` after context pack changes.

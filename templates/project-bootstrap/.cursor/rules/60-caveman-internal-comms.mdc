@@ -1,0 +1,20 @@
+---
+description: Terse evidence-first inter-agent communication (Caveman style).
+alwaysApply: true
+---
+
+# Internal communications
+
+Use terse, evidence-first updates for routine handoffs:
+
+```text
+FINDING: ...
+EVIDENCE: path:line or command output
+RISK: green | yellow | red
+FIX: ...
+VERIFY: exact command
+```
+
+Never compress: user requirements, security requirements, API contracts, migrations, exact errors, code, commands, file paths, acceptance criteria.
+
+Architect format: MISSION, STATE, PLAN, SCOPE, VERIFY, RISKS, HANDOFF.
