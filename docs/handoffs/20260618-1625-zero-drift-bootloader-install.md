@@ -1,13 +1,15 @@
-# Handoff: zero-drift-bootloader-os initial install
+# Handoff: AI agent loops context pack initial install
 
 Date: 2026-06-18  
 Agent: Cursor AUTO (AI System Architect)  
-Branch/worktree: feature/zero-drift-bootloader-os  
-Current objective: Install v2.0 Zero-Drift Build OS context pack in isolated repo
+Branch/worktree: feature/ai-agent-loops (was `feature/zero-drift-bootloader-os`)  
+Current objective: Install v2.0 bootloader context pack in isolated repo
+
+> **Rename note (2026-06-18):** Project directory and GitHub repo were later renamed to `Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` / `NAS_Web_Game_Container_AI_AGENT_LOOPS`. See `20260618-1635-ai-agent-loops-rename.md`.
 
 ## Completed
 
-- Created `/Users/computer/Desktop/App Development/Zero-Drift_Build_OS` — fully separate from `Red_Alert2_NAS:Arch`
+- Created `/Users/computer/Desktop/App Development/Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS` — fully separate from `Red_Alert2_NAS:Arch`
 - Installed MISSION.md, AGENTS.md, CLAUDE.md, full `.cursor/rules/`, `.claude/agents/`, `.claude/skills/verify-change/`
 - Added docs/specs, architecture map, ADR-0001 (isolation), ai-decision-log, handoff template
 - Added `scripts/verify-context-pack.sh` and `scripts/bootstrap-project.sh`
@@ -17,7 +19,7 @@ Current objective: Install v2.0 Zero-Drift Build OS context pack in isolated rep
 
 ## Changed files
 
-All files in Zero-Drift_Build_OS (new repo, no NAS files touched)
+All files in Red_Alert2_NAS:Arch_w.AI_AGENT_LOOPS (new repo, no NAS files touched)
 
 ## Verification run
 
@@ -42,9 +44,9 @@ None at install time.
 
 ## Next smallest action
 
-1. Push to GitHub `Zero-Drift_Build_OS` on `feature/zero-drift-bootloader-os`
+1. Push to GitHub `NAS_Web_Game_Container_AI_AGENT_LOOPS` on `feature/ai-agent-loops`
 2. Merge to `main` after human review
-3. Bootstrap first real application project from this OS
+3. Bootstrap first real application project from this repo
 
 ## Context needed by next agent
 
